@@ -115,6 +115,9 @@
         border:1px dashed rgba(255,143,171,.55); color:var(--sakura); border-radius:8px; cursor:pointer; font-size:13.5px;
       }
       .file-btn:hover{ background:rgba(255,143,171,.08); }
+      .range-row{ display:flex; align-items:center; gap:12px; }
+      .range-row input[type="range"]{ flex:1; accent-color:var(--sakura-deep); min-height:38px; padding:0; cursor:pointer; }
+      .range-val{ flex:none; min-width:46px; text-align:center; font-weight:700; color:var(--gold); background:var(--field); border:1px solid var(--line); border-radius:8px; padding:4px 8px; font-size:14px; }
       .or-line{ display:flex; align-items:center; gap:10px; color:var(--faint); font-size:12px; margin:2px 0 10px; }
       .or-line::before,.or-line::after{ content:""; flex:1; height:1px; background:var(--line-soft); }
       .add-btn{
@@ -249,7 +252,7 @@
         <ol>
           <li>刚下载的 <b>index.html</b> 传到 HelioHost 的 <b>/httpdocs/</b> 根目录，覆盖旧文件。</li>
           <li id="exportUploadStep">如果下面有待上传图片，把它们传到 <b>/httpdocs/images/</b> 文件夹（没有这个文件夹就先新建一个）。</li>
-          <li>刷新你的博客首页就能看到新内容了。</li>
+          <li>刷新 <b>https://leelokhan.helioho.st/</b> 就能看到新内容了。</li>
         </ol>
         <div id="exportFileList"></div>
         <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;">
@@ -267,6 +270,7 @@
         <button class="tab" type="button" data-pane="hero"><span class="tab-name">轮播大图</span><span class="tab-count" data-count="hero"></span></button>
         <button class="tab" type="button" data-pane="links"><span class="tab-name">我的站点</span><span class="tab-count" data-count="links"></span></button>
         <button class="tab" type="button" data-pane="models"><span class="tab-name">看板娘</span><span class="tab-count" data-count="models"></span></button>
+        <button class="tab" type="button" data-pane="background"><span class="tab-name">背景设置</span><span class="tab-count">▶</span></button>
         <button class="tab" type="button" data-pane="music"><span class="tab-name">音乐与设置</span><span class="tab-count">♪</span></button>
       </nav>
 
@@ -309,6 +313,33 @@
           </div>
         </section>
 
+        <section class="pane" id="pane-background">
+          <div class="pane-head"><h2>背景<span class="accent">设置</span></h2></div>
+          <p class="pane-note">博客全站背景循环播放的视频，和它上面那层深色遮罩。主视频可以<b>粘贴外部链接</b>，也可以<b>选本地视频文件</b>：选了本地文件会自动填上文件名，导出后记得把这个视频文件传到网站根目录（HelioHost 是 /httpdocs/，GitHub 是仓库根目录），博客才播得出来。</p>
+          <div class="card">
+            <div class="or-line">主背景视频：粘贴链接，或选本地文件</div>
+            <div class="field">
+              <label for="bgVideo">主背景视频（链接或文件名）</label>
+              <input type="text" id="bgVideo" placeholder="粘贴视频链接，或选本地文件后自动填文件名，比如 bg.mp4" />
+              <span class="hint" id="bgVideoHint"></span>
+            </div>
+            <label class="file-btn">选择本地视频文件<input type="file" id="bgFile" accept="video/*" hidden /></label>
+            <div class="field" style="margin-top:14px;">
+              <label for="bgFallback">备用视频地址</label>
+              <input type="text" id="bgFallback" placeholder="主视频播不出来时用的地址" />
+              <span class="hint">主视频加载失败时，博客会自动改播这个地址。</span>
+            </div>
+            <div class="field" style="margin-top:14px;">
+              <label for="bgOverlay">遮罩深浅（背景上压的那层深色）</label>
+              <div class="range-row">
+                <input type="range" id="bgOverlay" min="0" max="0.9" step="0.05" value="0.55" />
+                <span class="range-val" id="bgOverlayVal">0.55</span>
+              </div>
+              <span class="hint">数值越大背景越暗、文字越清楚；0 是完全不压暗。</span>
+            </div>
+          </div>
+        </section>
+
         <section class="pane" id="pane-music">
           <div class="pane-head"><h2>音乐<span class="accent">与设置</span></h2></div>
           <p class="pane-note">博客左下角音乐播放器放的网易云专辑。想换专辑：打开网易云网页版的专辑页，地址里 <b>id=</b> 后面那串数字就是专辑 ID，填进来即可。</p>
@@ -336,7 +367,7 @@
 
       <aside class="preview">
         <div class="preview-box">
-          <div class="preview-head"><b>博客预览</b><a href="../" target="_blank" rel="noopener">打开现在的博客 ↗</a></div>
+          <div class="preview-head"><b>博客预览</b><a href="https://leelokhan.helioho.st/" target="_blank" rel="noopener">打开现在的博客 ↗</a></div>
           <div class="pv-hero">
             <img id="pvHeroImg" alt="轮播大图预览" />
             <div class="pv-hero-nav">
@@ -370,6 +401,11 @@
  "siteName": "美滋滋的个人博客",
  "bgVideo": "../meizizi/bg.mp4",
  "bgVideoFallback": "https://mm.py.kg/vd/Hatsune%20Miku.mp4",
+ "background": {
+  "video": "bg.mp4",
+  "fallback": "https://mm.py.kg/vd/Hatsune%20Miku.mp4",
+  "overlay": 0.55
+ },
  "heroImages": [
   {
    "src": "https://images.hdqwalls.com/download/girl-anime-gk-3840x2160.jpg",
@@ -1212,8 +1248,41 @@
       $("#albumId").value = (cfg().music && cfg().music.id) || "";
       $("#siteName").value = cfg().siteName || "";
     }
+
+    /* ================= 背景设置 ================= */
+    var BG_DEFAULTS = { video: "bg.mp4", fallback: "https://mm.py.kg/vd/Hatsune%20Miku.mp4", overlay: 0.55 };
+    function bgCfg(){
+      var c = cfg();
+      if (!c.background || typeof c.background !== "object") c.background = deepCopy(BG_DEFAULTS);
+      return c.background;
+    }
+    function syncBgHint(){
+      var hint = $("#bgVideoHint");
+      if (!hint) return;
+      var v = String(bgCfg().video || "").trim();
+      if (!v){
+        hint.className = "hint";
+        hint.textContent = "现在是空的，博客不会播放背景视频。";
+      } else if (/^https?:\/\//i.test(v)){
+        hint.className = "hint";
+        hint.textContent = "网络视频链接，直接播放，不用上传文件。";
+      } else {
+        hint.className = "hint warn";
+        hint.textContent = "本地视频文件：导出后要把「" + v.split("/").pop() + "」传到网站根目录（HelioHost 的 /httpdocs/，GitHub 是仓库根目录），博客才播得出来。";
+      }
+    }
+    function renderBackground(){
+      var b = bgCfg();
+      $("#bgVideo").value = b.video || "";
+      $("#bgFallback").value = b.fallback || "";
+      var ov = (typeof b.overlay === "number" && !isNaN(b.overlay)) ? b.overlay : BG_DEFAULTS.overlay;
+      ov = Math.min(0.9, Math.max(0, ov));
+      $("#bgOverlay").value = ov;
+      $("#bgOverlayVal").textContent = ov.toFixed(2);
+      syncBgHint();
+    }
     function renderAll(){
-      renderWorks(); renderArticles(); renderHero(); renderLinks(); renderModels(); renderMusic();
+      renderWorks(); renderArticles(); renderHero(); renderLinks(); renderModels(); renderMusic(); renderBackground();
       refresh();
     }
 
@@ -1226,6 +1295,18 @@
       c.friendLinks = c.friendLinks || [];
       c.live2dModels = c.live2dModels || [];
       c.music = c.music || { server: "netease", type: "album", id: "", apis: [] };
+      /* 背景设置：新版首页有 background 一项；老文件没有时，用旧的 bgVideo 字段或默认值补上 */
+      if (!c.background || typeof c.background !== "object"){
+        c.background = {
+          video: (typeof c.bgVideo === "string" && c.bgVideo) ? c.bgVideo : BG_DEFAULTS.video,
+          fallback: (typeof c.bgVideoFallback === "string" && c.bgVideoFallback) ? c.bgVideoFallback : BG_DEFAULTS.fallback,
+          overlay: BG_DEFAULTS.overlay
+        };
+      } else {
+        if (typeof c.background.video !== "string") c.background.video = BG_DEFAULTS.video;
+        if (typeof c.background.fallback !== "string") c.background.fallback = "";
+        if (typeof c.background.overlay !== "number" || isNaN(c.background.overlay)) c.background.overlay = BG_DEFAULTS.overlay;
+      }
       state.config = c;
       state.prefix = parts.prefix;
       state.suffix = parts.suffix;
@@ -1324,11 +1405,11 @@
         lines.push("2. 下面这些图片要传到 /httpdocs/images/ 文件夹（没有就先新建）：");
         ups.forEach(function(p){ lines.push("   - " + p.replace(/^images\//, "")); });
         lines.push("");
-        lines.push("3. 刷新你的博客首页查看新内容。");
+        lines.push("3. 刷新 https://leelokhan.helioho.st/ 查看新内容。");
       } else {
         lines.push("2. 这次没有引用本地图片，不用额外传图。");
         lines.push("");
-        lines.push("3. 刷新你的博客首页查看新内容。");
+        lines.push("3. 刷新 https://leelokhan.helioho.st/ 查看新内容。");
       }
       lastChecklist = lines.join("\n");
       $("#exportFileList").innerHTML = ups.length
@@ -1376,6 +1457,30 @@
     $("#siteName").addEventListener("input", function(){
       cfg().siteName = $("#siteName").value;
       markDirty(); renderPreview();
+    });
+    $("#bgVideo").addEventListener("input", function(){
+      bgCfg().video = $("#bgVideo").value;
+      markDirty(); syncBgHint();
+    });
+    $("#bgFile").addEventListener("change", function(){
+      var f = this.files && this.files[0];
+      this.value = "";
+      if (!f) return;
+      bgCfg().video = f.name;
+      $("#bgVideo").value = f.name;
+      markDirty(); syncBgHint();
+      toast("已选本地视频：" + f.name + "，导出后记得把它传到网站根目录（HelioHost 的 /httpdocs/）");
+    });
+    $("#bgFallback").addEventListener("input", function(){
+      bgCfg().fallback = $("#bgFallback").value;
+      markDirty();
+    });
+    $("#bgOverlay").addEventListener("input", function(){
+      var v = parseFloat($("#bgOverlay").value);
+      if (isNaN(v)) v = 0;
+      bgCfg().overlay = v;
+      $("#bgOverlayVal").textContent = v.toFixed(2);
+      markDirty();
     });
     $("#pvPrev").addEventListener("click", function(){
       var n = (cfg().heroImages || []).length;

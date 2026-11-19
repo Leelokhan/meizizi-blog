@@ -47,7 +47,7 @@
       .bg-shade{
         position:fixed; inset:0; z-index:-2; pointer-events:none;
         background:
-          linear-gradient(180deg, rgba(7,8,13,.62) 0%, rgba(7,8,13,.45) 34%, rgba(7,8,13,.72) 78%, rgba(7,8,13,.9) 100%),
+          linear-gradient(180deg, rgba(7,8,13,var(--ov1,.62)) 0%, rgba(7,8,13,var(--ov2,.45)) 34%, rgba(7,8,13,var(--ov3,.72)) 78%, rgba(7,8,13,var(--ov4,.9)) 100%),
           radial-gradient(1100px 520px at 85% -5%, rgba(242,96,126,.14), transparent 60%),
           radial-gradient(900px 500px at -10% 30%, rgba(143,216,199,.08), transparent 60%);
       }
@@ -429,7 +429,7 @@
     </style>
   </head>
   <body>
-    <!-- 背景视频：优先同站 bg.mp4，失败自动回退远程地址（见底部脚本） -->
+    <!-- 背景视频：候选地址按顺序尝试，播出一个就停（见 CONFIG.background 与底部脚本） -->
     <video class="bg-video" id="bgVideo" autoplay muted loop playsinline preload="auto"></video>
     <div class="bg-shade"></div>
 
@@ -603,9 +603,10 @@
     var CONFIG = {
       siteName: "美滋滋的个人博客",
 
-      /* 背景视频：先试同站相对路径，失败自动回退到 fallbackVideo */
-      bgVideo: "bg.mp4",
-      bgVideoFallback: "https://mm.py.kg/vd/Hatsune%20Miku.mp4",
+      /* 背景设置：video 主背景视频（本地文件名如 bg.mp4，或远程视频链接）；
+         fallback 主视频加载失败时用的备用视频地址；
+         overlay 背景遮罩不透明度 0~0.9，越大背景越暗、文字越清楚 */
+      background: { video: "bg.mp4", fallback: "https://mm.py.kg/vd/Hatsune%20Miku.mp4", overlay: 0.55 },
 
       /* 顶部大图（轮播，至少 3 张；某张加载失败会自动换下一张） */
       heroImages: [
@@ -855,19 +856,58 @@
       window.addEventListener("load", queueSweep);
     }
 
-    /* ---------- 背景视频 ---------- */
+    /* ---------- 背景视频 + 遮罩 ---------- */
     (function () {
+      var BG = CONFIG.background || {};
       var v = $("#bgVideo");
-      var fell = false;
-      function fallback() {
-        if (fell) return; fell = true;
-        v.src = CONFIG.bgVideoFallback;
-        v.load(); var p = v.play(); if (p && p.catch) p.catch(function () {});
+
+      /* 遮罩不透明度：读 CONFIG.background.overlay（0~0.9，默认 0.55），
+         按比例缩放遮罩渐变的各段深浅，0.55 时与原设计一致 */
+      var shade = document.querySelector(".bg-shade");
+      var ov = parseFloat(BG.overlay);
+      if (isNaN(ov)) ov = 0.55;
+      ov = Math.max(0, Math.min(0.9, ov));
+      if (shade) {
+        var k = ov / 0.55;
+        function alpha(base) { return Math.min(0.97, base * k).toFixed(3); }
+        shade.style.setProperty("--ov1", alpha(0.62));
+        shade.style.setProperty("--ov2", alpha(0.45));
+        shade.style.setProperty("--ov3", alpha(0.72));
+        shade.style.setProperty("--ov4", alpha(0.9));
       }
-      v.addEventListener("error", fallback, true);
-      v.src = CONFIG.bgVideo;
-      var p = v.play(); if (p && p.catch) p.catch(function () {});
-      setTimeout(function () { if (v.readyState === 0 && !fell) fallback(); }, 6000);
+
+      /* 候选地址按顺序尝试，播出一个就停：
+         background.video → "bg.mp4" → "../meizizi/bg.mp4" → background.fallback
+         （同一份首页部署在 HelioHost 根目录和 GitHub Pages 仓库根目录，
+           本地视频的位置不同，候选列表让两边都能播出本地视频） */
+      var candidates = [];
+      [BG.video, "bg.mp4", "../meizizi/bg.mp4", BG.fallback].forEach(function (u) {
+        if (u && candidates.indexOf(u) === -1) candidates.push(u);
+      });
+      var idx = 0, settled = false, watchdog = null;
+
+      function succeed() {
+        settled = true;
+        if (watchdog) { clearTimeout(watchdog); watchdog = null; }
+      }
+      function next() {
+        if (settled) return;
+        idx++;
+        if (idx < candidates.length) tryPlay();
+      }
+      function tryPlay() {
+        if (watchdog) clearTimeout(watchdog);
+        v.src = candidates[idx];
+        v.load();
+        var p = v.play(); if (p && p.catch) p.catch(function () {});
+        watchdog = setTimeout(function () {
+          if (!settled && v.readyState < 2) next();
+        }, 6000);
+      }
+      v.addEventListener("playing", succeed);
+      v.addEventListener("canplay", succeed);
+      v.addEventListener("error", function () { if (!settled) next(); }, true);
+      if (candidates.length) tryPlay();
     })();
 
     /* ---------- 开场动画 + 导航站点名 ---------- */
