@@ -601,141 +601,304 @@
        下面的渲染代码不用动。换图就改图片地址，增删条目就增删一行。
        ================================================================ */
     var CONFIG = {
-      siteName: "美滋滋的个人博客",
-
-      /* 背景设置：video 主背景视频（本地文件名如 bg.mp4，或远程视频链接）；
-         fallback 主视频加载失败时用的备用视频地址；
-         overlay 背景遮罩不透明度 0~0.9，越大背景越暗、文字越清楚 */
-      background: { video: "bg.mp4", fallback: "https://mm.py.kg/vd/Hatsune%20Miku.mp4", overlay: 0.55 },
-
-      /* 顶部大图（轮播，至少 3 张；某张加载失败会自动换下一张） */
-      heroImages: [
-        { src: "https://images.hdqwalls.com/download/girl-anime-gk-3840x2160.jpg", title: "把日子过得美滋滋", desc: "这里放我的画、我的字，和最近沉迷的一切。往下逛逛，说不定就有一幅画、一篇文章刚好对上你的心情。" },
-        { src: "https://wallpapercrafter.com/desktop/49214-anime-girl-anime-artist-artwork-digital-art-hd-4k-5k.jpg", title: "画师的深夜桌面", desc: "灵感总在夜里来。这一区是我的绘画作品，排版随手、角度随心，就像刚画完摊在桌上晾干的样子。" },
-        { src: "https://imgs.wantubizhi.com/img/ADDA3C5D760C6828B77B505A29D43E83F22D390DC40AB58A2C726A27EEA23E1860BDFE5128E2FAD48311AA147A56593E0648883DF358A7EA5E962B01F5E65BAB5AC30348E379C283CD188AE8EF0ACEDF", title: "云朵之上的少女", desc: "专题区写 AI：提示词、大模型、AI 音乐……都是我亲手折腾过的经验，不长，泡杯茶就能看完。" },
-        { src: "https://wallpapercave.com/dwp2x/wp5512729.jpg", title: "樱色季节，风也温柔", desc: "左下角有音乐和看板娘陪你一起逛。点开粉色按钮，她就会出来打招呼，还能换一位。" },
-        { src: "https://wallpapergg.fra1.cdn.digitaloceanspaces.com/wallpapers/8924-android-girl-anime-7.jpg", title: "机甲与少女", desc: "科技和浪漫从来不冲突——就像这个站，一边是代码和模型，一边是樱花和歌声。" },
-        { src: "https://a-static.besthdwallpaper.com/cute-blushing-girl-wallpaper-2560x1920-100388_27.jpg", title: "微笑的理由", desc: "生活已经够忙了，逛博客的时候就放松一点。背景里循环播放的视频，也是我特意挑的。" },
-        { src: "https://cdn.mikuobsession.net/6fd126d0-146d-4325-b608-acc914257487/144700147_p26.png", title: "歌声响起的地方", desc: "初音的舞台永远不会落幕。打开左下角的音乐按钮，边听歌边看画，是这个站最舒服的打开方式。" }
+  "siteName": "美滋滋的个人博客",
+  "background": {
+    "video": "bg.mp4",
+    "fallback": "https://mm.py.kg/vd/Hatsune%20Miku.mp4",
+    "overlay": 0.55
+  },
+  "heroImages": [
+    {
+      "src": "https://images5.alphacoders.com/133/thumb-1920-1332573.png",
+      "title": "把日子过得美滋滋",
+      "desc": "这里放我的画、我的字，和最近沉迷的一切。往下逛逛，说不定就有一幅画、一篇文章刚好对上你的心情。"
+    },
+    {
+      "src": "https://images8.alphacoders.com/134/thumb-1920-1346618.jpeg",
+      "title": "画师的深夜桌面",
+      "desc": "灵感总在夜里来。这一区是我的绘画作品，排版随手、角度随心，就像刚画完摊在桌上晾干的样子。"
+    },
+    {
+      "src": "https://images3.alphacoders.com/131/thumb-1920-1316654.jpeg",
+      "title": "云朵之上的少女",
+      "desc": "专题区写 AI：提示词、大模型、AI 音乐……都是我亲手折腾过的经验，不长，泡杯茶就能看完。"
+    },
+    {
+      "src": "https://images2.alphacoders.com/134/thumb-1920-1346617.jpeg",
+      "title": "樱色季节，风也温柔",
+      "desc": "左下角有音乐和看板娘陪你一起逛。点开粉色按钮，她就会出来打招呼，还能换一位。"
+    },
+    {
+      "src": "https://images6.alphacoders.com/138/thumb-1920-1386556.png",
+      "title": "机甲与少女",
+      "desc": "科技和浪漫从来不冲突——就像这个站，一边是代码和模型，一边是樱花和歌声。"
+    },
+    {
+      "src": "https://images8.alphacoders.com/134/thumb-1920-1349793.png",
+      "title": "微笑的理由",
+      "desc": "生活已经够忙了，逛博客的时候就放松一点。背景里循环播放的视频，也是我特意挑的。"
+    },
+    {
+      "src": "https://images3.alphacoders.com/134/thumb-1920-1349445.png",
+      "title": "歌声响起的地方",
+      "desc": "初音的舞台永远不会落幕。打开左下角的音乐按钮，边听歌边看画，是这个站最舒服的打开方式。"
+    },
+    {
+      "src": "https://images4.alphacoders.com/140/thumb-1920-1402849.jpg",
+      "title": "新大图",
+      "desc": ""
+    }
+  ],
+  "works": [
+    {
+      "title": "金领带",
+      "img": "images/00003-730824268.png",
+      "intro": "坏笑的金发少女，金色领带配黑手套。"
+    },
+    {
+      "title": "樱花和服",
+      "img": "https://images7.alphacoders.com/919/thumb-1920-919555.png",
+      "intro": "粉发少女穿着樱色和服，站在漫天樱花里。"
+    },
+    {
+      "title": "霓虹少女",
+      "img": "https://images-ng.pixai.art/gi/orig/7e7f22b2-2803-4ede-b51c-acdcc3a151ad",
+      "intro": "黑长直少女站在霓虹色彩里。"
+    },
+    {
+      "title": "涂鸦精灵",
+      "img": "https://cdn.displate.com/artwork/324x454/2024-06-16/fcf23764057068349beb59c5cc535dcd_e63cc256b94ea5c1fb270d91cfdd1545.jpg",
+      "intro": "银蓝发精灵少女，涂鸦风的色彩爆炸。"
+    },
+    {
+      "title": "粉色帽子",
+      "img": "https://netwrckstatic.netwrck.com/static/uploads/ainostalgic-colorful-Anime-Girl-3.webp",
+      "intro": "戴着粉色帽子的街头少女。"
+    },
+    {
+      "title": "樱花舞",
+      "img": "https://konachan.net/image/469fb53b118ae59363f2fec1ae10bd86/Konachan.com%20-%20282469%20blush%20brown_hair%20cherry_blossoms%20dress%20flowers%20green_eyes%20kh_(kh_1128)%20long_hair%20original%20petals%20summer_dress.jpg",
+      "intro": "棕发少女在樱花里起舞。"
+    },
+    {
+      "title": "花瓣",
+      "img": "https://konachan.net/image/0414805c36b3dba0240e555dee5b1116/Konachan.com%20-%20396703%20blue_eyes%20blush%20bow%20brown_hair%20cherry_blossoms%20close%20flowers%20headband%20hyosi%20long_hair%20petals%20school_uniform%20tree%20waguri_kaoruko.jpg",
+      "intro": "深棕发少女捏着一片花瓣，站在樱花树下。"
+    },
+    {
+      "title": "彩虹发",
+      "img": "https://prodsuppart-s3.suppart.app/image/e5150921758070235333.png",
+      "intro": "金粉渐变长发的少女，站在糖果色的漩涡里。"
+    },
+    {
+      "title": "樱花白裙",
+      "img": "https://ph-files.imgix.net/d8883dc9-7236-4380-9a47-d2b3847414c9.png?auto=format",
+      "intro": "短发少女穿着白裙，站在满树樱花前。"
+    },
+    {
+      "title": "星空之下",
+      "img": "https://images4.alphacoders.com/118/1184450.png",
+      "intro": "短发制服少女站在璀璨星空下。"
+    }
+  ],
+  "articles": [
+    {
+      "title": "AI 绘画入门：从提示词开始",
+      "date": "2026-11-16",
+      "tags": [
+        "AI绘画",
+        "提示词"
       ],
-
-      /* 绘画作品（10 幅；图片在同站 images/ 文件夹里；img 留空时自动从顶部大图里轮换取图） */
-      works: [
-        { title: "金领带",   img: "images/00003-730824268.png",  intro: "坏笑的金发少女，金色领带配黑手套。" },
-        { title: "蓝裙少女", img: "images/00006-79605906.png",   intro: "银发精灵的蓝白长裙。" },
-        { title: "自拍",     img: "images/00004-3951255071.png", intro: "红发少女比耶自拍。" },
-        { title: "慵懒午后", img: "images/00040-2671735365.png", intro: "金发少女慵懒地伸着脚丫。" },
-        { title: "运动之后", img: "images/00031-438089308.png",  intro: "运动后的少女，汗水与灿烂笑容。" },
-        { title: "课间小憩", img: "images/00040-887820491.png",  intro: "紫发少女趴在课桌上打盹。" },
-        { title: "微醺",     img: "images/00013-1040358351.png", intro: "粉发少女慵懒地靠着沙发。" },
-        { title: "调皮",     img: "images/00015-28398896.png",   intro: "银发少女调皮地吐着舌头。" },
-        { title: "库巴姬",   img: "images/00103-2897763643.png", intro: "戴着皇冠的库巴姬与马里奥。" },
-        { title: "水手服",   img: "images/00030-4094606271.png", intro: "金发少女的水手服。" }
+      "minutes": 3,
+      "excerpt": "不会画画也能出图？先从一句像样的提示词开始：主体、风格、光线、镜头，四件事说清楚，画面就八九不离十。",
+      "content": "很多人第一次打开 AI 绘画工具，输一句「一个女孩」就等着出奇迹，结果往往是张糊脸。其实提示词是有结构的：先说主体——谁、在做什么、穿什么；再说风格——水彩、厚涂还是照片感；然后补光线和镜头，比如黄昏逆光、浅景深、半身构图。四件事说清楚，出图质量立刻上一个台阶。\n我的笨办法是：同一句提示词一次抽四张，挑最顺眼的留下来，再对着它反推——哪些词起了作用，哪些是凑数的，记到小本本上。抽卡一百次之后，你会发现自己慢慢有了「词感」。最后别忘了负面提示词，把多指、变形、模糊这些常见毛病提前排除掉，省下大量返工时间。"
+    },
+    {
+      "title": "ChatGPT 这样用才高效",
+      "date": "2026-11-12",
+      "tags": [
+        "ChatGPT",
+        "效率"
       ],
-
-      /* 文章（6 篇 AI 短文；content 用 \n 分段） */
-      articles: [
-        {
-          title: "AI 绘画入门：从提示词开始",
-          date: "2026-11-16", tags: ["AI绘画", "提示词"], minutes: 3,
-          excerpt: "不会画画也能出图？先从一句像样的提示词开始：主体、风格、光线、镜头，四件事说清楚，画面就八九不离十。",
-          content: "很多人第一次打开 AI 绘画工具，输一句「一个女孩」就等着出奇迹，结果往往是张糊脸。其实提示词是有结构的：先说主体——谁、在做什么、穿什么；再说风格——水彩、厚涂还是照片感；然后补光线和镜头，比如黄昏逆光、浅景深、半身构图。四件事说清楚，出图质量立刻上一个台阶。\n我的笨办法是：同一句提示词一次抽四张，挑最顺眼的留下来，再对着它反推——哪些词起了作用，哪些是凑数的，记到小本本上。抽卡一百次之后，你会发现自己慢慢有了「词感」。最后别忘了负面提示词，把多指、变形、模糊这些常见毛病提前排除掉，省下大量返工时间。"
-        },
-        {
-          title: "ChatGPT 这样用才高效",
-          date: "2026-11-12", tags: ["ChatGPT", "效率"], minutes: 3,
-          excerpt: "别把 ChatGPT 当搜索框。给背景、给例子、让它先反问你，三招下去，回答质量天差地别。",
-          content: "用了两年 ChatGPT，我最大的体会是：它回答的质量，基本等于你提问的质量。第一招，给足背景。别问「帮我写封邮件」，要说清你是谁、写给谁、想达成什么、语气要多正式。第二招，给例子。想要什么风格，先贴一段你喜欢的范本，它模仿起来比形容词描述准得多。第三招，让它先反问。复杂任务先加一句「动手前，先向我提三个澄清问题」，能省掉后面五轮返工。\n另外，长对话里它会慢慢「忘事」，重要约束隔几轮就重申一次；拿到答案别急着用，关键事实让它给出处、自己再核一遍。把这几件事做成习惯，它就从聊天玩具变成了真能省时间的同事。"
-        },
-        {
-          title: "本地跑大模型，我的第一台 AI 主机",
-          date: "2026-11-08", tags: ["本地部署", "大模型"], minutes: 4,
-          excerpt: "云端 API 按量付费总让人肉疼，我干脆组了台机器把模型跑在本地。这篇聊聊配置、显存和那些坑。",
-          content: "起因很简单：云端 API 按量付费，写代码调试时一天烧掉几十块，心疼。于是我组了第一台专门跑大模型的主机。结论先说：预算优先砸显存。模型能不能装下、跑多快，八成看显存大小，其次才是显卡算力。24GB 显存是道舒服的门槛，7B、14B 的量化模型随便跑，32B 也能勉强招呼。\n软件方面我用 Ollama 起步，一行命令拉模型、起服务，写脚本调用和调 API 几乎没区别；想要图形界面就再加个 LM Studio。坑也踩了几个：电源功率要留足余量，机箱风道别省，驱动版本和 CUDA 对不上能折腾一晚上。但当第一个模型在自己机器上秒回消息时，那种「数据不出门、断网也能用」的踏实感，值了。"
-        },
-        {
-          title: "AI 音乐：让机器帮你写歌",
-          date: "2026-11-03", tags: ["AI音乐", "创作"], minutes: 3,
-          excerpt: "写好歌词结构，选对曲风关键词，AI 就能把你哼的旋律变成一首完整的歌。这是我最近的快乐源泉。",
-          content: "最近让我最上头的是 AI 写歌。流程比想象中简单：先写词，再选曲风，最后生成。歌词不用追求文学性，但结构要清楚——主歌铺故事，副歌给记忆点，每段行数尽量整齐，AI 唱起来才不赶拍。曲风关键词是灵魂：城市流行、木吉他民谣、合成器浪潮，换一组词，同一份歌词能变出完全不同的气质。\n我的习惯是一次生成两个版本，A 版听旋律，B 版听编曲，拼拼凑凑找最顺耳的方向，再反复抽卡微调。要说明的是，AI 给的是毛坯：人声的咬字、段落的气口，细听都有机器味。但作为灵感放大器，它已经足够惊人——洗澡时哼的调子，睡前就能变成一首完整的歌，这种快乐，谁试谁知道。"
-        },
-        {
-          title: "提示词工程：把 AI 当成同事",
-          date: "2026-10-28", tags: ["提示词", "方法论"], minutes: 4,
-          excerpt: "提示词写得好不好，本质是沟通能力好不好。交代背景、给出标准、迭代反馈——和带新人一模一样。",
-          content: "「提示词工程」听起来玄乎，说穿了就是把话说明白的能力。我慢慢摸索出一个心法：把 AI 当成一个聪明但第一天入职的同事。你不会对新人说一句「把方案做了」就走开，你会交代背景：项目给谁看、解决什么问题；给出标准：参考哪个范本、避开哪些雷区；然后看初稿、给反馈、再迭代。对 AI 完全同理。\n具体到写法，我常用三段式：第一段讲背景和目标，第二段讲具体要求和格式，第三段给一个例子。遇到复杂任务，别指望一句话搞定，把它拆成小步，每步确认再继续。还有个小技巧：让它先复述一遍任务再动手，理解错了当场就能发现。说到底，提示词工程练的不是咒语，是表达——这对和人沟通，同样有用。"
-        },
-        {
-          title: "AI 时代，画画的人还在画什么",
-          date: "2026-10-20", tags: ["随想", "绘画"], minutes: 3,
-          excerpt: "AI 一秒出图之后，手绘还有意义吗？画了几个月之后，我的答案慢慢清楚了起来。",
-          content: "自从 AI 绘画能一秒出图，总有人问我：还手动画什么呢？老实说，我也迷茫过一阵。论速度、论完成度，业余的我都比不过模型。但继续画了几个月后，答案慢慢清楚了：AI 解决的是「像不像」，而我想画的，是「为什么是这一笔」。\n一张亲手画的图里，藏着只有我知道的东西：这个配色是因为那天晚霞特别红，这个构图改了七遍是因为想留住某个瞬间。这些选择的过程，本身就是作品的一部分，是生成按钮给不了的。现在我反而把 AI 当成助手：它出草稿和配色方案，我来做取舍和落笔。工具越强，「人的那部分」就越显眼——审美、故事，和不肯将就的心气。画画的人还在画的，大概就是这些。"
-        }
+      "minutes": 3,
+      "excerpt": "别把 ChatGPT 当搜索框。给背景、给例子、让它先反问你，三招下去，回答质量天差地别。",
+      "content": "用了两年 ChatGPT，我最大的体会是：它回答的质量，基本等于你提问的质量。第一招，给足背景。别问「帮我写封邮件」，要说清你是谁、写给谁、想达成什么、语气要多正式。第二招，给例子。想要什么风格，先贴一段你喜欢的范本，它模仿起来比形容词描述准得多。第三招，让它先反问。复杂任务先加一句「动手前，先向我提三个澄清问题」，能省掉后面五轮返工。\n另外，长对话里它会慢慢「忘事」，重要约束隔几轮就重申一次；拿到答案别急着用，关键事实让它给出处、自己再核一遍。把这几件事做成习惯，它就从聊天玩具变成了真能省时间的同事。"
+    },
+    {
+      "title": "本地跑大模型，我的第一台 AI 主机",
+      "date": "2026-11-08",
+      "tags": [
+        "本地部署",
+        "大模型"
       ],
-
-      /* 友情链接 / 我的站点（显示在页面底部，点击新窗口打开；
-         icon 可选：monitor 监控 / compass 导航 / activity 观测 / sparkles 模型 / github / anchor） */
-      friendLinks: [
-        { name: "Komari 监控",       desc: "我的服务器监控面板",               url: "https://x.mei.cc.cd/",                                              icon: "monitor"  },
-        { name: "Meizizi 导航",      desc: "我的链接导航站",                   url: "https://mzz.mei.cc.cd/",                                            icon: "compass"  },
-        { name: "Meizizi 观测",      desc: "IP 检测与风险评分",                url: "https://oh.mei.cc.cd/",                                             icon: "activity" },
-        { name: "Live2D 看板娘模型站", desc: "看板娘同款 Live2D 模型站",        url: "https://live2d.honkai.ct8.pl/",                                     icon: "sparkles" },
-        { name: "IP 检测页源码",     desc: "我的 GitHub 项目 Simple-IP-Check-Page", url: "https://github.com/Leelokhan/Simple-IP-Check-Page/tree/main",  icon: "github"   },
-        { name: "我的 Live2D 模型站", desc: "碧蓝航线 Live2D 模型",             url: "https://leelokhan.hidns.co/",                                       icon: "anchor"   }
+      "minutes": 4,
+      "excerpt": "云端 API 按量付费总让人肉疼，我干脆组了台机器把模型跑在本地。这篇聊聊配置、显存和那些坑。",
+      "content": "起因很简单：云端 API 按量付费，写代码调试时一天烧掉几十块，心疼。于是我组了第一台专门跑大模型的主机。结论先说：预算优先砸显存。模型能不能装下、跑多快，八成看显存大小，其次才是显卡算力。24GB 显存是道舒服的门槛，7B、14B 的量化模型随便跑，32B 也能勉强招呼。\n软件方面我用 Ollama 起步，一行命令拉模型、起服务，写脚本调用和调 API 几乎没区别；想要图形界面就再加个 LM Studio。坑也踩了几个：电源功率要留足余量，机箱风道别省，驱动版本和 CUDA 对不上能折腾一晚上。但当第一个模型在自己机器上秒回消息时，那种「数据不出门、断网也能用」的踏实感，值了。"
+    },
+    {
+      "title": "AI 音乐：让机器帮你写歌",
+      "date": "2026-11-03",
+      "tags": [
+        "AI音乐",
+        "创作"
       ],
-
-      /* 音乐：网易云专辑（通过 Meting 兼容接口加载） */
-      music: {
-        server: "netease",
-        type: "album",
-        id: "373093919",
-        apis: [
-          "https://api.i-meto.com/meting/api",
-          "https://api.injahow.cn/meting/"
-        ]
-      },
-
-      /* 看板娘：16 个碧蓝航线模型，文件放在博客同站 live2d/models/ 目录下（同源加载，无跨域问题）；
-         每个模型一个文件夹，模型文件名为 <文件夹名>.model3.json；
-         默认第一个（拉菲·新年兔女郎），某个加载失败会自动换下一个，「换一个」按钮也可手动切换 */
-      live2dModels: [
-        { name: "拉菲（新年兔女郎）",   url: "live2d/models/lafei_4/lafei_4.model3.json" },
-        { name: "标枪（海滩野餐）",     url: "live2d/models/biaoqiang_3/biaoqiang_3.model3.json" },
-        { name: "爱宕",                 url: "live2d/models/aidang_2/aidang_2.model3.json" },
-        { name: "贝尔法斯特",           url: "live2d/models/beierfasite_2/beierfasite_2.model3.json" },
-        { name: "俾斯麦",               url: "live2d/models/bisimai_2/bisimai_2.model3.json" },
-        { name: "大凤",                 url: "live2d/models/dafeng_2/dafeng_2.model3.json" },
-        { name: "天狼星",               url: "live2d/models/tianlangxing_3/tianlangxing_3.model3.json" },
-        { name: "圣路易斯（微醺之雪）", url: "live2d/models/shengluyisi_3/shengluyisi_3.model3.json" },
-        { name: "埃尔德里奇（新年牵手）", url: "live2d/models/aierdeliqi_4/aierdeliqi_4.model3.json" },
-        { name: "火奴鲁鲁（夏日事故）", url: "live2d/models/huonululu_3/huonululu_3.model3.json" },
-        { name: "德意志",               url: "live2d/models/deyizhi_3/deyizhi_3.model3.json" },
-        { name: "黑太子",               url: "live2d/models/heitaizi_2/heitaizi_2.model3.json" },
-        { name: "宁海",                 url: "live2d/models/ninghai_4/ninghai_4.model3.json" },
-        { name: "平海",                 url: "live2d/models/pinghai_4/pinghai_4.model3.json" },
-        { name: "提尔比茨",             url: "live2d/models/tierbici_2/tierbici_2.model3.json" },
-        { name: "斯佩伯爵",             url: "live2d/models/sipeibojue_5/sipeibojue_5.model3.json" }
+      "minutes": 3,
+      "excerpt": "写好歌词结构，选对曲风关键词，AI 就能把你哼的旋律变成一首完整的歌。这是我最近的快乐源泉。",
+      "content": "最近让我最上头的是 AI 写歌。流程比想象中简单：先写词，再选曲风，最后生成。歌词不用追求文学性，但结构要清楚——主歌铺故事，副歌给记忆点，每段行数尽量整齐，AI 唱起来才不赶拍。曲风关键词是灵魂：城市流行、木吉他民谣、合成器浪潮，换一组词，同一份歌词能变出完全不同的气质。\n我的习惯是一次生成两个版本，A 版听旋律，B 版听编曲，拼拼凑凑找最顺耳的方向，再反复抽卡微调。要说明的是，AI 给的是毛坯：人声的咬字、段落的气口，细听都有机器味。但作为灵感放大器，它已经足够惊人——洗澡时哼的调子，睡前就能变成一首完整的歌，这种快乐，谁试谁知道。"
+    },
+    {
+      "title": "提示词工程：把 AI 当成同事",
+      "date": "2026-10-28",
+      "tags": [
+        "提示词",
+        "方法论"
       ],
-      /* 看板娘渲染引擎：PIXI + pixi-live2d-display，同时兼容 Cubism 2 与 Cubism 3/4 模型；
-         数组里是同一脚本的多个 CDN，依次尝试；core2 / core4 某个加载失败不中断，
-         对应格式的角色会在加载模型时自动跳过 */
-      live2dEngine: {
-        pixi: [
-          "https://cdn.jsdelivr.net/npm/pixi.js@6.5.10/dist/browser/pixi.min.js",
-          "https://unpkg.com/pixi.js@6.5.10/dist/browser/pixi.min.js"
-        ],
-        core4: [
-          "https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"
-        ],
-        core2: [
-          "https://cdn.jsdelivr.net/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js"
-        ],
-        display: [
-          "https://cdn.jsdelivr.net/npm/pixi-live2d-display@0.4.0/dist/index.min.js",
-          "https://unpkg.com/pixi-live2d-display@0.4.0/dist/index.min.js"
-        ]
-      }
-    };
+      "minutes": 4,
+      "excerpt": "提示词写得好不好，本质是沟通能力好不好。交代背景、给出标准、迭代反馈——和带新人一模一样。",
+      "content": "「提示词工程」听起来玄乎，说穿了就是把话说明白的能力。我慢慢摸索出一个心法：把 AI 当成一个聪明但第一天入职的同事。你不会对新人说一句「把方案做了」就走开，你会交代背景：项目给谁看、解决什么问题；给出标准：参考哪个范本、避开哪些雷区；然后看初稿、给反馈、再迭代。对 AI 完全同理。\n具体到写法，我常用三段式：第一段讲背景和目标，第二段讲具体要求和格式，第三段给一个例子。遇到复杂任务，别指望一句话搞定，把它拆成小步，每步确认再继续。还有个小技巧：让它先复述一遍任务再动手，理解错了当场就能发现。说到底，提示词工程练的不是咒语，是表达——这对和人沟通，同样有用。"
+    },
+    {
+      "title": "AI 时代，画画的人还在画什么",
+      "date": "2026-10-20",
+      "tags": [
+        "随想",
+        "绘画"
+      ],
+      "minutes": 3,
+      "excerpt": "AI 一秒出图之后，手绘还有意义吗？画了几个月之后，我的答案慢慢清楚了起来。",
+      "content": "自从 AI 绘画能一秒出图，总有人问我：还手动画什么呢？老实说，我也迷茫过一阵。论速度、论完成度，业余的我都比不过模型。但继续画了几个月后，答案慢慢清楚了：AI 解决的是「像不像」，而我想画的，是「为什么是这一笔」。\n一张亲手画的图里，藏着只有我知道的东西：这个配色是因为那天晚霞特别红，这个构图改了七遍是因为想留住某个瞬间。这些选择的过程，本身就是作品的一部分，是生成按钮给不了的。现在我反而把 AI 当成助手：它出草稿和配色方案，我来做取舍和落笔。工具越强，「人的那部分」就越显眼——审美、故事，和不肯将就的心气。画画的人还在画的，大概就是这些。"
+    }
+  ],
+  "friendLinks": [
+    {
+      "name": "Komari 监控",
+      "desc": "我的服务器监控面板",
+      "url": "https://x.mei.cc.cd/",
+      "icon": "monitor"
+    },
+    {
+      "name": "Meizizi 导航",
+      "desc": "我的链接导航站",
+      "url": "https://mzz.mei.cc.cd/",
+      "icon": "compass"
+    },
+    {
+      "name": "Meizizi 观测",
+      "desc": "IP 检测与风险评分",
+      "url": "https://oh.mei.cc.cd/",
+      "icon": "activity"
+    },
+    {
+      "name": "Live2D 看板娘模型站",
+      "desc": "看板娘同款 Live2D 模型站",
+      "url": "https://live2d.honkai.ct8.pl/",
+      "icon": "sparkles"
+    },
+    {
+      "name": "IP 检测页源码",
+      "desc": "我的 GitHub 项目 Simple-IP-Check-Page",
+      "url": "https://github.com/Leelokhan/Simple-IP-Check-Page/tree/main",
+      "icon": "github"
+    },
+    {
+      "name": "我的 Live2D 模型站",
+      "desc": "碧蓝航线 Live2D 模型",
+      "url": "https://leelokhan.hidns.co/",
+      "icon": "anchor"
+    }
+  ],
+  "music": {
+    "server": "netease",
+    "type": "album",
+    "id": "373093919",
+    "apis": [
+      "https://api.i-meto.com/meting/api",
+      "https://api.injahow.cn/meting/"
+    ]
+  },
+  "live2dModels": [
+    {
+      "name": "拉菲（新年兔女郎）",
+      "url": "live2d/models/lafei_4/lafei_4.model3.json"
+    },
+    {
+      "name": "标枪（海滩野餐）",
+      "url": "live2d/models/biaoqiang_3/biaoqiang_3.model3.json"
+    },
+    {
+      "name": "爱宕",
+      "url": "live2d/models/aidang_2/aidang_2.model3.json"
+    },
+    {
+      "name": "贝尔法斯特",
+      "url": "live2d/models/beierfasite_2/beierfasite_2.model3.json"
+    },
+    {
+      "name": "俾斯麦",
+      "url": "live2d/models/bisimai_2/bisimai_2.model3.json"
+    },
+    {
+      "name": "大凤",
+      "url": "live2d/models/dafeng_2/dafeng_2.model3.json"
+    },
+    {
+      "name": "天狼星",
+      "url": "live2d/models/tianlangxing_3/tianlangxing_3.model3.json"
+    },
+    {
+      "name": "圣路易斯（微醺之雪）",
+      "url": "live2d/models/shengluyisi_3/shengluyisi_3.model3.json"
+    },
+    {
+      "name": "埃尔德里奇（新年牵手）",
+      "url": "live2d/models/aierdeliqi_4/aierdeliqi_4.model3.json"
+    },
+    {
+      "name": "火奴鲁鲁（夏日事故）",
+      "url": "live2d/models/huonululu_3/huonululu_3.model3.json"
+    },
+    {
+      "name": "德意志",
+      "url": "live2d/models/deyizhi_3/deyizhi_3.model3.json"
+    },
+    {
+      "name": "黑太子",
+      "url": "live2d/models/heitaizi_2/heitaizi_2.model3.json"
+    },
+    {
+      "name": "宁海",
+      "url": "live2d/models/ninghai_4/ninghai_4.model3.json"
+    },
+    {
+      "name": "平海",
+      "url": "live2d/models/pinghai_4/pinghai_4.model3.json"
+    },
+    {
+      "name": "提尔比茨",
+      "url": "live2d/models/tierbici_2/tierbici_2.model3.json"
+    },
+    {
+      "name": "斯佩伯爵",
+      "url": "live2d/models/sipeibojue_5/sipeibojue_5.model3.json"
+    }
+  ],
+  "live2dEngine": {
+    "pixi": [
+      "https://cdn.jsdelivr.net/npm/pixi.js@6.5.10/dist/browser/pixi.min.js",
+      "https://unpkg.com/pixi.js@6.5.10/dist/browser/pixi.min.js"
+    ],
+    "core4": [
+      "https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"
+    ],
+    "core2": [
+      "https://cdn.jsdelivr.net/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js"
+    ],
+    "display": [
+      "https://cdn.jsdelivr.net/npm/pixi-live2d-display@0.4.0/dist/index.min.js",
+      "https://unpkg.com/pixi-live2d-display@0.4.0/dist/index.min.js"
+    ]
+  }
+};
     /* ================= CONFIG 结束 ================= */
 
     var $ = function (s, el) { return (el || document).querySelector(s); };
