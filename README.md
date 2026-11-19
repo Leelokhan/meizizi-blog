@@ -10,7 +10,7 @@
 
 ![内容编辑器](docs/screenshots/editor.jpg)
 
-[![Deploy to Cloudflare Pages](https://deploy.cloudflare.com/button.svg)](https://deploy.cloudflare.com/?url=https://github.com/Leelokhan/meizizi-blog)
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/Leelokhan/meizizi-blog)
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Leelokhan/meizizi-blog)
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Leelokhan/meizizi-blog)
 
@@ -44,7 +44,7 @@
 
 | 平台 | 要点 |
 | --- | --- |
-| Cloudflare Pages | 点按钮 → 授权 GitHub → Create，自动部署；送 `*.pages.dev` 域名，可绑自己的域名 |
+| Cloudflare | 点按钮 → 登录 Cloudflare → 授权 GitHub → 部署，送 `*.workers.dev` 域名，可绑自己的域名 |
 | Vercel | 点按钮 → 授权 GitHub → Deploy；送 `*.vercel.app` 域名 |
 | Netlify | 点按钮 → 授权 GitHub → Deploy；送 `*.netlify.app` 域名 |
 | GitHub Pages | 推到 GitHub 后自动部署（分支部署），地址是 `https://<你的用户名>.github.io/meizizi-blog/`；想用根域名可以把仓库名改成 `<你的用户名>.github.io` |
