@@ -508,9 +508,9 @@
       <section id="gallery">
         <div class="wrap">
           <div class="sec-head">
-            <h2>绘画<span class="accent">作品</span></h2>
+            <h2 id="secWorksTitle">绘画<span class="accent">作品</span></h2>
             <div class="sec-rule"></div>
-            <p>像手摆在桌上的一样，每幅画都有自己的角度</p>
+            <p id="secWorksSub">像手摆在桌上的一样，每幅画都有自己的角度</p>
           </div>
           <div class="gallery" id="galleryGrid"></div>
         </div>
@@ -520,9 +520,9 @@
       <section id="articles">
         <div class="wrap">
           <div class="sec-head">
-            <h2>文章<span class="accent">专题</span> · AI 手记</h2>
+            <h2 id="secArticlesTitle">文章<span class="accent">专题</span> · AI 手记</h2>
             <div class="sec-rule"></div>
-            <p>点开任意一篇，慢慢看</p>
+            <p id="secArticlesSub">点开任意一篇，慢慢看</p>
           </div>
           <div class="posts" id="postGrid"></div>
         </div>
@@ -532,9 +532,9 @@
       <section id="longArticles">
         <div class="wrap">
           <div class="sec-head">
-            <h2>长<span class="accent">文</span> · 慢慢读</h2>
+            <h2 id="secLongTitle">长<span class="accent">文</span> · 慢慢读</h2>
             <div class="sec-rule"></div>
-            <p>写得长一点的，带图，慢慢看</p>
+            <p id="secLongSub">写得长一点的，带图，慢慢看</p>
           </div>
           <div class="long-posts" id="longGrid"></div>
         </div>
@@ -544,7 +544,7 @@
       <section id="about">
         <div class="wrap">
           <div class="sec-head">
-            <h2>关<span class="accent">于</span></h2>
+            <h2 id="secAboutTitle">关<span class="accent">于</span></h2>
             <div class="sec-rule"></div>
           </div>
           <div class="about-card">
@@ -565,9 +565,9 @@
       <section id="links">
         <div class="wrap">
           <div class="sec-head">
-            <h2>我的<span class="accent">站点</span></h2>
+            <h2 id="secLinksTitle">我的<span class="accent">站点</span></h2>
             <div class="sec-rule"></div>
-            <p>我的其他小站和项目，都在这里</p>
+            <p id="secLinksSub">我的其他小站和项目，都在这里</p>
           </div>
           <div class="links-grid" id="linksGrid"></div>
         </div>
@@ -643,7 +643,7 @@
     <script>
     /* ================================================================
        ★ CONFIG 数据块 —— 后期替换这里即可 ★
-       作品、文章、长文、顶部大图、友情链接、音乐、看板娘、关于都在这里改，
+       作品、文章、长文、顶部大图、友情链接、音乐、看板娘、关于、栏目标题都在这里改，
        下面的渲染代码不用动。换图就改图片地址，增删条目就增删一行。
        ================================================================ */
     var CONFIG = {
@@ -656,6 +656,32 @@
   "about": {
     "heading": "你好，我是美滋滋",
     "intro": "白天和 AI 打交道，晚上提笔（和数位板）画画。这个小站放我的绘画作品和 AI 使用手记：提示词、工具、踩过的坑，还有一些不成熟的小感想。内容会慢慢更新，欢迎常来坐坐，听首歌再走。"
+  },
+  "sections": {
+    "works": {
+      "title": "绘画作品",
+      "accent": "作品",
+      "sub": "像手摆在桌上的一样，每幅画都有自己的角度"
+    },
+    "articles": {
+      "title": "文章专题 · AI 手记",
+      "accent": "专题",
+      "sub": "点开任意一篇，慢慢看"
+    },
+    "longArticles": {
+      "title": "长文 · 慢慢读",
+      "accent": "文",
+      "sub": "写得长一点的，带图，慢慢看"
+    },
+    "about": {
+      "title": "关于",
+      "accent": "于"
+    },
+    "links": {
+      "title": "我的站点",
+      "accent": "站点",
+      "sub": "我的其他小站和项目，都在这里"
+    }
   },
   "heroImages": [
     {
@@ -1354,6 +1380,43 @@
         });
       }
     }
+
+    /* ---------- 各栏目标题（来自 CONFIG.sections，编辑器里可改） ----------
+       title 是完整标题，accent 是标题里要高亮的那几个字，sub 是标题下的副标题小字。 */
+    (function () {
+      var secs = CONFIG.sections || {};
+      function paint(h2Id, pId, cfg) {
+        if (!cfg) return;
+        var h = document.getElementById(h2Id);
+        if (h && cfg.title) {
+          h.textContent = "";
+          var acc = cfg.accent || "";
+          if (acc && cfg.title.indexOf(acc) >= 0) {
+            var parts = cfg.title.split(acc);
+            parts.forEach(function (part, i) {
+              if (part) h.appendChild(document.createTextNode(part));
+              if (i < parts.length - 1) {
+                var sp = document.createElement("span");
+                sp.className = "accent";
+                sp.textContent = acc;
+                h.appendChild(sp);
+              }
+            });
+          } else {
+            h.textContent = cfg.title;
+          }
+        }
+        if (pId) {
+          var p = document.getElementById(pId);
+          if (p) p.textContent = cfg.sub || "";
+        }
+      }
+      paint("secWorksTitle", "secWorksSub", secs.works);
+      paint("secArticlesTitle", "secArticlesSub", secs.articles);
+      paint("secLongTitle", "secLongSub", secs.longArticles);
+      paint("secAboutTitle", null, secs.about);
+      paint("secLinksTitle", "secLinksSub", secs.links);
+    })();
 
     /* ---------- 文章卡片 + 阅读弹窗 ---------- */
     (function () {
