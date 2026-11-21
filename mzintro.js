@@ -90,7 +90,7 @@
     var pts=buildPoints();
     var basePts=pts.base, closedPts=pts.closed, openPts=pts.open;
     /* ---------- 粒子 ---------- */
-    var CHARS='アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789{}<>/=+*#;:constletfn=>の美滋滋';
+    var CHARS='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789{}[]()<>/=+*#;:.,!?$%&@^~_-|美滋滋';
     function pickChar(){ return CHARS[Math.floor(Math.random()*CHARS.length)]; }
     var RAIN_CHARS='01';
     function pickRain(){ return RAIN_CHARS[Math.floor(Math.random()*RAIN_CHARS.length)]; }
