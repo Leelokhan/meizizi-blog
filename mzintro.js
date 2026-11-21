@@ -63,9 +63,8 @@
   var intro=document.getElementById('mzIntro');
   function kill(){ if(intro&&intro.parentNode) intro.parentNode.removeChild(intro);
     document.documentElement.style.overflow=''; }
-  /* Komari 适配：只在首页播，每个浏览器标签页只播一次；想每次刷新都播就删掉下面这段 */
+  /* Komari 适配：只在首页播，每次刷新都播 */
   if (location.pathname !== '/' && location.pathname !== '/index.html') { kill(); return; }
-  try { if (sessionStorage.getItem('mzIntroShown')) { kill(); return; } sessionStorage.setItem('mzIntroShown', '1'); } catch (e) {}
   try{
     if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){ kill(); return; }
     document.documentElement.style.overflow='hidden';
