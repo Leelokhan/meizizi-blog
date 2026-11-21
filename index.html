@@ -1224,6 +1224,8 @@
         if (i < 3) { var e = document.createElement("em"); e.appendChild(s); brand.appendChild(e); }
         else brand.appendChild(s);
       });
+      applyTextStyle(introName, CONFIG.siteNameStyle);
+      applyTextStyle(brand, CONFIG.siteNameStyle);
       var intro = $("#intro"), closed = false;
       function close() {
         if (closed) return; closed = true;
@@ -1268,6 +1270,8 @@
         $$("button", dotsBox).forEach(function (b, i) { b.classList.toggle("on", i === idx); });
         $("#heroTitle").textContent = items[idx].title;
         $("#heroDesc").textContent = items[idx].desc;
+        applyTextStyle($("#heroTitle"), items[idx].titleStyle);
+        applyTextStyle($("#heroDesc"), items[idx].descStyle);
         $("#heroCount").textContent = (idx + 1) + " / " + items.length;
       }
       function go(i) { idx = (i + items.length) % items.length; show(); }
@@ -1302,6 +1306,8 @@
         var cap = document.createElement("figcaption");
         cap.innerHTML = "<h3>《" + w.title + "》</h3><p></p>";
         cap.querySelector("p").textContent = w.intro;
+        applyTextStyle(cap.querySelector("h3"), w.titleStyle);
+        applyTextStyle(cap.querySelector("p"), w.introStyle);
         fig.appendChild(img); fig.appendChild(cap);
         grid.appendChild(fig);
       });
@@ -1358,6 +1364,24 @@
       chainImg($("#aboutAvatar"), allImgs.slice(5).concat(allImgs.slice(0, 5)), 0);
     })();
 
+    /* 文字样式：每段文字可单独改颜色 / 字体 / 大小。
+       样式对象 {"color":"#ff8fab","font":"serif","size":20}，字段缺了或空了就用默认。
+       font 取值："" 默认、serif 衬线、sans 无衬线、kai 楷体、mono 等宽、hand 手写；size 是 px 数字。 */
+    var TEXT_FONTS = {
+      serif: "Georgia, 'Songti SC', 'Noto Serif CJK SC', serif",
+      sans: "'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif",
+      kai: "'Kaiti SC', 'KaiTi', 'STKaiti', serif",
+      mono: "'SF Mono', Consolas, 'Noto Sans Mono CJK SC', monospace",
+      hand: "'Comic Sans MS', 'Chalkboard SE', 'Yuanti SC', cursive"
+    };
+    function applyTextStyle(el, st) {
+      if (!el) return;
+      st = st || {};
+      el.style.color = st.color || "";
+      el.style.fontFamily = (st.font && TEXT_FONTS[st.font]) ? TEXT_FONTS[st.font] : "";
+      el.style.fontSize = st.size ? (typeof st.size === "number" ? st.size + "px" : st.size) : "";
+    }
+
     /* 长文 / 短文共用的正文渲染：字符串按换行分段；数组按内容块渲染。
        块格式：{"t":"p","x":"段落"} / {"t":"h","x":"小标题"} / {"t":"img","src":"地址","cap":"图说"} */
     function renderArticleContent(box, content) {
@@ -1388,6 +1412,7 @@
       function paint(h2Id, pId, cfg) {
         if (!cfg) return;
         var h = document.getElementById(h2Id);
+        applyTextStyle(h, cfg.titleStyle);
         if (h && cfg.title) {
           h.textContent = "";
           var acc = cfg.accent || "";
@@ -1409,6 +1434,7 @@
         if (pId) {
           var p = document.getElementById(pId);
           if (p) p.textContent = cfg.sub || "";
+          applyTextStyle(p, cfg.subStyle);
         }
       }
       paint("secWorksTitle", "secWorksSub", secs.works);
@@ -1436,6 +1462,8 @@
           '<span class="post-more">阅读全文</span></div>';
         card.querySelector("h3").textContent = a.title;
         card.querySelector("p").textContent = a.excerpt;
+        applyTextStyle(card.querySelector("h3"), a.titleStyle);
+        applyTextStyle(card.querySelector("p"), a.excerptStyle);
         var img = card.querySelector("img");
         img.alt = "文章《" + a.title + "》配图";
         img.loading = "lazy";
@@ -1459,6 +1487,7 @@
           a.tags.map(function (t) { return '<span class="tag">' + t + "</span>"; }).join("");
         var box = $("#readerContent");
         renderArticleContent(box, a.content);
+        applyTextStyle(box, a.bodyStyle);
         reader.classList.add("open");
         document.body.style.overflow = "hidden";
         $(".reader-panel", reader).scrollTop = 0;
@@ -1475,6 +1504,8 @@
       var ab = CONFIG.about || {};
       if (ab.heading) { var ah = $("#aboutHeading"); if (ah) ah.textContent = ab.heading; }
       if (ab.intro) { var ai = $("#aboutIntro"); if (ai) ai.textContent = ab.intro; }
+      applyTextStyle($("#aboutHeading"), ab.headingStyle);
+      applyTextStyle($("#aboutIntro"), ab.introStyle);
       var sw = $("#statWorks"); if (sw) sw.textContent = (CONFIG.works || []).length;
       var sa = $("#statArticles"); if (sa) sa.textContent = (CONFIG.articles || []).length + ((CONFIG.longArticles || []).length);
 
@@ -1498,6 +1529,8 @@
           '<span class="post-more">慢慢读</span></div>';
         card.querySelector("h3").textContent = a.title;
         card.querySelector("p").textContent = a.excerpt || "";
+        applyTextStyle(card.querySelector("h3"), a.titleStyle);
+        applyTextStyle(card.querySelector("p"), a.excerptStyle);
         var img = card.querySelector("img");
         img.alt = "长文《" + a.title + "》封面";
         img.loading = "lazy";
@@ -1520,6 +1553,7 @@
           (a.tags || []).map(function (t) { return '<span class="tag">' + t + "</span>"; }).join("");
         var box = $("#readerContent");
         renderArticleContent(box, a.content);
+        applyTextStyle(box, a.bodyStyle);
         reader.classList.add("open");
         document.body.style.overflow = "hidden";
         var panel = reader.querySelector(".reader-panel"); if (panel) panel.scrollTop = 0;
@@ -1560,6 +1594,8 @@
           '<span class="friend-arrow" aria-hidden="true">↗</span>';
         a.querySelector("b").textContent = l.name;
         a.querySelector(".friend-desc").textContent = l.desc;
+        applyTextStyle(a.querySelector("b"), l.nameStyle);
+        applyTextStyle(a.querySelector(".friend-desc"), l.descStyle);
         a.querySelector(".friend-host").textContent = host;
         /* 落定位置随机：轻微倾斜 + 上下左右错位，像手摆的一样 */
         a.style.setProperty("--rot", rndF(-2, 2).toFixed(2) + "deg");

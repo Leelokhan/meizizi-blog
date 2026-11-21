@@ -105,6 +105,23 @@
       .field input:focus, .field select:focus, .field textarea:focus{ border-color:var(--sakura); box-shadow:0 0 0 3px rgba(255,143,171,.16); }
       .field .hint{ font-size:12px; color:var(--faint); }
       .field .hint.warn{ color:var(--gold); }
+
+      /* 文字样式行（颜色 / 字体 / 字号，紧凑一行） */
+      .style-row{
+        display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+        margin:-4px 0 10px; padding:5px 9px;
+        background:rgba(255,255,255,.025); border:1px dashed var(--line-soft); border-radius:8px;
+        font-size:12px; color:var(--faint);
+      }
+      .field .style-row{ margin:2px 0 0; }
+      .style-row .style-tag{ font-weight:700; color:var(--muted); }
+      .style-item{ display:inline-flex; align-items:center; gap:5px; }
+      .style-row input[type="color"]{ width:30px; height:22px; min-height:22px; padding:0; border:1px solid var(--line); border-radius:5px; background:transparent; cursor:pointer; }
+      .style-row input[type="color"].unset{ opacity:.35; }
+      .style-row select{ background:var(--field); border:1px solid var(--line); border-radius:6px; min-height:26px; font-size:12.5px; padding:0 4px; color:var(--text); }
+      .style-row input[type="number"]{ width:58px; background:var(--field); border:1px solid var(--line); border-radius:6px; min-height:26px; font-size:12.5px; padding:0 6px; color:var(--text); }
+      .style-x{ min-height:22px; width:22px; padding:0; border:1px solid var(--line); background:transparent; color:var(--faint); border-radius:5px; font-size:11px; line-height:1; cursor:pointer; }
+      .style-x:hover{ color:var(--danger); border-color:rgba(255,122,122,.5); }
       .work-flex{ display:flex; gap:14px; }
       .work-thumb{ flex:none; width:132px; }
       .work-thumb img{ width:132px; height:132px; object-fit:cover; border-radius:9px; border:1px solid var(--line); background:var(--ink-2); display:block; }
@@ -389,11 +406,13 @@
               <input type="text" id="aboutHeading" placeholder="比如：你好，我是美滋滋" />
               <span class="hint">显示在关于区的大标题。</span>
             </div>
+            <div id="aboutStyle-heading"></div>
             <div class="field" style="margin-top:14px;">
               <label for="aboutIntro">介绍文字</label>
               <textarea id="aboutIntro" rows="5" placeholder="介绍一下自己、这个站放些什么"></textarea>
               <span class="hint">标题下面那段自我介绍。</span>
             </div>
+            <div id="aboutStyle-intro"></div>
           </div>
         </section>
 
@@ -407,7 +426,9 @@
               <div class="field"><label for="secTitle-works">标题</label><input type="text" id="secTitle-works" placeholder="栏目的完整标题" /></div>
               <div class="field"><label for="secAccent-works">高亮的字（可留空，留空就不高亮）</label><input type="text" id="secAccent-works" placeholder="标题里要显示成粉色的字，比如：作品" /></div>
             </div>
+            <div id="secStyle-works-title"></div>
             <div class="field"><label for="secSub-works">副标题</label><input type="text" id="secSub-works" placeholder="标题下面那行小字" /></div>
+            <div id="secStyle-works-sub"></div>
             <div class="sec-preview" id="secPreview-works"></div>
           </div>
 
@@ -417,7 +438,9 @@
               <div class="field"><label for="secTitle-articles">标题</label><input type="text" id="secTitle-articles" placeholder="栏目的完整标题" /></div>
               <div class="field"><label for="secAccent-articles">高亮的字（可留空，留空就不高亮）</label><input type="text" id="secAccent-articles" placeholder="标题里要显示成粉色的字，比如：专题" /></div>
             </div>
+            <div id="secStyle-articles-title"></div>
             <div class="field"><label for="secSub-articles">副标题</label><input type="text" id="secSub-articles" placeholder="标题下面那行小字" /></div>
+            <div id="secStyle-articles-sub"></div>
             <div class="sec-preview" id="secPreview-articles"></div>
           </div>
 
@@ -427,7 +450,9 @@
               <div class="field"><label for="secTitle-longArticles">标题</label><input type="text" id="secTitle-longArticles" placeholder="栏目的完整标题" /></div>
               <div class="field"><label for="secAccent-longArticles">高亮的字（可留空，留空就不高亮）</label><input type="text" id="secAccent-longArticles" placeholder="标题里要显示成粉色的字，比如：文" /></div>
             </div>
+            <div id="secStyle-longArticles-title"></div>
             <div class="field"><label for="secSub-longArticles">副标题</label><input type="text" id="secSub-longArticles" placeholder="标题下面那行小字" /></div>
+            <div id="secStyle-longArticles-sub"></div>
             <div class="sec-preview" id="secPreview-longArticles"></div>
           </div>
 
@@ -437,6 +462,7 @@
               <div class="field"><label for="secTitle-about">标题</label><input type="text" id="secTitle-about" placeholder="栏目的完整标题" /></div>
               <div class="field"><label for="secAccent-about">高亮的字（可留空，留空就不高亮）</label><input type="text" id="secAccent-about" placeholder="标题里要显示成粉色的字，比如：于" /></div>
             </div>
+            <div id="secStyle-about-title"></div>
             <p style="margin:2px 0 0; font-size:12.5px; color:var(--faint);">关于没有副标题。</p>
             <div class="sec-preview" id="secPreview-about"></div>
           </div>
@@ -447,7 +473,9 @@
               <div class="field"><label for="secTitle-links">标题</label><input type="text" id="secTitle-links" placeholder="栏目的完整标题" /></div>
               <div class="field"><label for="secAccent-links">高亮的字（可留空，留空就不高亮）</label><input type="text" id="secAccent-links" placeholder="标题里要显示成粉色的字，比如：站点" /></div>
             </div>
+            <div id="secStyle-links-title"></div>
             <div class="field"><label for="secSub-links">副标题</label><input type="text" id="secSub-links" placeholder="标题下面那行小字" /></div>
+            <div id="secStyle-links-sub"></div>
             <div class="sec-preview" id="secPreview-links"></div>
           </div>
         </section>
@@ -466,6 +494,7 @@
               <input type="text" id="siteName" placeholder="美滋滋的个人博客" />
               <span class="hint">显示在博客打开时的开场动画和左上角。</span>
             </div>
+            <div id="siteNameStyleSlot"></div>
           </div>
           <div class="card">
             <div class="card-top"><span class="card-idx">i</span><div class="grow"><div class="card-name">导入 / 导出说明</div></div></div>
@@ -1091,27 +1120,31 @@
         if (img.getAttribute("src") !== src) img.src = src;
         $("#pvHeroTitle").textContent = h.title || "";
         $("#pvHeroDesc").textContent = h.desc || "";
+        applyStyleEl($("#pvHeroTitle"), h.titleStyle);
+        applyStyleEl($("#pvHeroDesc"), h.descStyle);
       } else {
         img.removeAttribute("src");
         $("#pvHeroTitle").textContent = "（还没有大图）";
         $("#pvHeroDesc").textContent = "";
+        applyStyleEl($("#pvHeroTitle"), null);
+        applyStyleEl($("#pvHeroDesc"), null);
       }
       $("#pvWorks").innerHTML = (c.works || []).map(function(w, i){
         return '<div class="pv-work"><img alt="" src="' + esc(resolveImg(w.img, i)) + '" loading="lazy" onerror="this.style.opacity=0" />' +
-          "<b>《" + esc(w.title || "未命名") + "》</b><span>" + esc(w.intro || "") + "</span></div>";
+          "<b" + styleAttr(w.titleStyle) + ">《" + esc(w.title || "未命名") + "》</b><span" + styleAttr(w.introStyle) + ">" + esc(w.intro || "") + "</span></div>";
       }).join("") || '<p class="empty-note">还没有作品</p>';
       $("#pvPosts").innerHTML = (c.articles || []).map(function(a){
-        return '<div class="pv-post"><b>' + esc(a.title || "未命名") + "</b><span>" +
+        return '<div class="pv-post"><b' + styleAttr(a.titleStyle) + ">" + esc(a.title || "未命名") + "</b><span>" +
           esc(a.date || "") + " · 约 " + esc(a.minutes || 3) + " 分钟 · " +
           esc((a.tags || []).join(" / ")) + "</span></div>";
       }).join("") || '<p class="empty-note">还没有文章</p>';
       $("#pvLong").innerHTML = (c.longArticles || []).map(function(la){
-        return '<div class="pv-post"><b>' + esc(la.title || "未命名") + "</b><span>" +
+        return '<div class="pv-post"><b' + styleAttr(la.titleStyle) + ">" + esc(la.title || "未命名") + "</b><span>" +
           esc(la.date || "") + " · 约 " + esc(la.minutes || 8) + " 分钟 · " +
           ((la.content || []).length) + " 个内容块</span></div>";
       }).join("") || '<p class="empty-note">还没有长文</p>';
       $("#pvLinks").innerHTML = (c.friendLinks || []).map(function(l){
-        return '<span class="pv-link">' + esc(l.name || "未命名") + "</span>";
+        return '<span class="pv-link"' + styleAttr(l.nameStyle) + ">" + esc(l.name || "未命名") + "</span>";
       }).join("") || '<span class="empty-note">还没有链接</span>';
       $("#pvMeta").innerHTML =
         "看板娘默认：<b>" + esc(state.defaultModel || "（无）") + "</b> · 共 " + (c.live2dModels || []).length + " 个模型<br />" +
@@ -1161,6 +1194,116 @@
       return b;
     }
 
+    /* ================= 文字样式（颜色 / 字体 / 字号） =================
+       每段可编辑文字都能挂一个样式对象，存在那段文字所属的那一项上：
+       { color:"#ff8fab", font:"serif", size:20 }，三个字段都可空，空 = 默认。
+       样式跟着所属项走：解析时随 CONFIG 一起读入（parseLiteral 通用解析，不挑字段），
+       导出时 buildExportConfig 整份深拷贝 CONFIG 写回，删掉那一项样式也跟着没，不留孤儿。 */
+    var FONT_OPTIONS = [
+      ["", "默认字体"], ["serif", "衬线体"], ["sans", "无衬线体"],
+      ["kai", "楷体"], ["mono", "等宽"], ["hand", "手写体"]
+    ];
+    var FONT_STACKS = {
+      serif: '"Noto Serif SC","Songti SC","STSong",serif',
+      sans: '"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif',
+      kai: '"Kaiti SC","KaiTi","STKaiti",serif',
+      mono: 'ui-monospace,Menlo,Consolas,"Courier New",monospace',
+      hand: '"Segoe Script","Bradley Hand","Comic Sans MS",cursive'
+    };
+    /* 读出一项当前样式（只用于显示和预览，容忍缺失/异常值，不改动原数据） */
+    function styleOf(item, key){
+      var st = (item && typeof item[key] === "object" && item[key]) || {};
+      var color = typeof st.color === "string" ? st.color : "";
+      var font = typeof st.font === "string" ? st.font : "";
+      var size = st.size;
+      if (typeof size !== "number" && typeof size !== "string") size = "";
+      if (size !== "" && isNaN(parseFloat(size))) size = "";
+      return { color: color, font: font, size: size };
+    }
+    function isHexColor(v){ return /^#[0-9a-fA-F]{6}$/.test(v || ""); }
+    /* 把样式对象转成预览用的行内 CSS 属性串，没有样式时返回空串 */
+    function styleAttr(st){
+      if (!st || typeof st !== "object") return "";
+      var parts = [];
+      if (typeof st.color === "string" && st.color) parts.push("color:" + st.color);
+      if (typeof st.font === "string" && FONT_STACKS[st.font]) parts.push("font-family:" + FONT_STACKS[st.font]);
+      var sz = parseFloat(st.size);
+      if (!isNaN(sz) && sz > 0) parts.push("font-size:" + sz + "px");
+      return parts.length ? ' style="' + esc(parts.join(";")) + '"' : "";
+    }
+    /* 把样式直接套到一个固定元素上（右侧预览的大图标题等用） */
+    function applyStyleEl(el, st){
+      if (!el) return;
+      var s = (st && typeof st === "object") ? st : {};
+      el.style.color = (typeof s.color === "string" && s.color) ? s.color : "";
+      el.style.fontFamily = (typeof s.font === "string" && FONT_STACKS[s.font]) ? FONT_STACKS[s.font] : "";
+      var sz = parseFloat(s.size);
+      el.style.fontSize = (!isNaN(sz) && sz > 0) ? sz + "px" : "";
+    }
+    /* 生成一行紧凑的「文字样式」设置：颜色选择器 + 字体下拉 + 字号数字，三个都能清空回默认 */
+    function styleRowHTML(item, key, label){
+      var st = styleOf(item, key);
+      var known = FONT_OPTIONS.some(function(o){ return o[0] === st.font; });
+      var opts = FONT_OPTIONS.map(function(o){
+        return '<option value="' + o[0] + '"' + (st.font === o[0] ? " selected" : "") + ">" + o[1] + "</option>";
+      }).join("");
+      if (!known && st.font) opts += '<option value="' + esc(st.font) + '" selected>' + esc(st.font) + "</option>";
+      return '<div class="style-row" data-style-for="' + key + '">' +
+        '<span class="style-tag">' + esc(label || "文字样式") + "</span>" +
+        '<span class="style-item">颜色<input type="color" data-s="color" value="' + (isHexColor(st.color) ? st.color : "#000000") + '"' + (st.color ? "" : ' class="unset"') + ' /><button type="button" class="style-x" data-s="clearColor" title="颜色恢复默认" aria-label="颜色恢复默认">✕</button></span>' +
+        '<span class="style-item">字体<select data-s="font">' + opts + "</select></span>" +
+        '<span class="style-item">大小<input type="number" data-s="size" min="8" max="200" step="1" placeholder="默认" value="' + esc(st.size === "" ? "" : String(st.size)) + '" />px</span>' +
+      "</div>";
+    }
+    /* 改样式里的一个字段：只动这个字段，对象里其他字段原样保留；
+       三个字段都空了就把整个样式键从那一项上删掉，不留空对象 */
+    function writeStyleField(item, key, field, value){
+      if (!item) return;
+      var st = item[key];
+      if (!st || typeof st !== "object"){
+        if (value === "" || value == null) return;
+        st = { color: "", font: "", size: "" };
+        item[key] = st;
+      }
+      st[field] = value;
+      if (!st.color && !st.font && (st.size === "" || st.size == null)) delete item[key];
+    }
+    /* 绑定一行样式设置。getItem 每次现取所属项，保证增删条目后不错位 */
+    function bindStyleRow(scopeEl, getItem, key, after){
+      var row = scopeEl.querySelector('[data-style-for="' + key + '"]');
+      if (!row) return;
+      var colorIn = row.querySelector('[data-s="color"]');
+      var fontSel = row.querySelector('[data-s="font"]');
+      var sizeIn = row.querySelector('[data-s="size"]');
+      function done(){ markDirty(); if (after) after(); renderPreview(); }
+      colorIn.addEventListener("input", function(){
+        writeStyleField(getItem(), key, "color", colorIn.value);
+        colorIn.classList.remove("unset");
+        done();
+      });
+      row.querySelector('[data-s="clearColor"]').addEventListener("click", function(){
+        writeStyleField(getItem(), key, "color", "");
+        colorIn.classList.add("unset");
+        done();
+      });
+      fontSel.addEventListener("change", function(){
+        writeStyleField(getItem(), key, "font", fontSel.value);
+        done();
+      });
+      sizeIn.addEventListener("input", function(){
+        var v = sizeIn.value.trim();
+        if (v === ""){ writeStyleField(getItem(), key, "size", ""); done(); return; }
+        var n = parseFloat(v);
+        if (!isNaN(n) && n > 0){ writeStyleField(getItem(), key, "size", n); done(); }
+      });
+    }
+    /* 静态页（关于 / 栏目标题 / 音乐与设置）里的样式行：塞进占位格并绑定 */
+    function mountStyleRow(slotEl, getItem, key, label, after){
+      if (!slotEl) return;
+      slotEl.innerHTML = styleRowHTML(getItem(), key, label);
+      bindStyleRow(slotEl, getItem, key, after);
+    }
+
     /* ================= 作品编辑 ================= */
     function renderWorks(){
       var box = $("#worksList");
@@ -1175,7 +1318,9 @@
             '<div class="work-thumb"><img alt="作品预览" /><div class="thumb-cap">实时预览</div></div>' +
             '<div class="work-fields">' +
               '<div class="field"><label>标题</label><input type="text" data-bind="title" value="' + esc(w.title || "") + '" placeholder="比如：夜樱" /></div>' +
+              styleRowHTML(w, "titleStyle") +
               '<div class="field"><label>一句话介绍</label><input type="text" data-bind="intro" value="' + esc(w.intro || "") + '" placeholder="比如：满月之夜，樱花落在无人的站台上。" /></div>' +
+              styleRowHTML(w, "introStyle") +
               '<div class="or-line">图片：粘贴链接，或选本地文件</div>' +
               '<div class="field"><label>图片链接 / 路径</label><input type="text" data-bind="img" value="' + esc(w.img || "") + '" placeholder="粘贴图片链接，或留空自动用轮播大图" /><span class="hint" data-role="imghint"></span></div>' +
               '<label class="file-btn">选择本地图片<input type="file" accept="image/*" hidden data-role="file" /></label>' +
@@ -1206,6 +1351,8 @@
           card.querySelector(".card-name").textContent = "《" + (cfg().works[i].title || "未命名") + "》";
         }});
         bindField(card, "works", i, "intro");
+        bindStyleRow(card, function(){ return cfg().works[i]; }, "titleStyle");
+        bindStyleRow(card, function(){ return cfg().works[i]; }, "introStyle");
         bindField(card, "works", i, "img", { after: syncThumb });
         card.querySelector('[data-role="file"]').addEventListener("change", function(ev){
           var f = ev.target.files && ev.target.files[0];
@@ -1238,13 +1385,16 @@
           '<div class="grow"><div class="card-name">' + esc(a.title || "未命名") + '</div></div></div>' +
           '<div class="article-body">' +
             '<div class="field"><label>标题</label><input type="text" data-bind="title" value="' + esc(a.title || "") + '" /></div>' +
+            styleRowHTML(a, "titleStyle") +
             '<div class="grid2">' +
               '<div class="field"><label>日期</label><input type="date" data-bind="date" value="' + esc(a.date || "") + '" /></div>' +
               '<div class="field"><label>阅读时长（分钟）</label><input type="number" min="1" max="120" data-bind="minutes" value="' + esc(a.minutes || 3) + '" /></div>' +
             "</div>" +
             '<div class="field"><label>标签（逗号隔开）</label><input type="text" data-bind="tags" value="' + esc((a.tags || []).join("，")) + '" placeholder="比如：AI绘画，提示词" /></div>' +
             '<div class="field"><label>摘要（显示在文章列表里）</label><textarea rows="2" data-bind="excerpt">' + esc(a.excerpt || "") + "</textarea></div>" +
+            styleRowHTML(a, "excerptStyle") +
             '<div class="field"><label>正文（每换一行就是一个新段落）</label><textarea rows="10" data-bind="content">' + esc(a.content || "") + "</textarea></div>" +
+            styleRowHTML(a, "bodyStyle", "正文样式") +
           "</div>";
         var top = card.querySelector(".card-top");
         var toggle = document.createElement("button");
@@ -1265,6 +1415,9 @@
         bindField(card, "articles", i, "tags", { type: "tags" });
         bindField(card, "articles", i, "excerpt");
         bindField(card, "articles", i, "content");
+        bindStyleRow(card, function(){ return cfg().articles[i]; }, "titleStyle");
+        bindStyleRow(card, function(){ return cfg().articles[i]; }, "excerptStyle");
+        bindStyleRow(card, function(){ return cfg().articles[i]; }, "bodyStyle");
         box.appendChild(card);
       });
     }
@@ -1302,12 +1455,14 @@
           '<div class="grow"><div class="card-name">' + esc(la.title || "未命名") + '</div></div></div>' +
           '<div class="article-body">' +
             '<div class="field"><label>标题</label><input type="text" data-bind="title" value="' + esc(la.title || "") + '" /></div>' +
+            styleRowHTML(la, "titleStyle") +
             '<div class="grid2">' +
               '<div class="field"><label>日期</label><input type="date" data-bind="date" value="' + esc(la.date || "") + '" /></div>' +
               '<div class="field"><label>阅读时长（分钟）</label><input type="number" min="1" max="300" data-bind="minutes" value="' + esc(la.minutes || 8) + '" /></div>' +
             "</div>" +
             '<div class="field"><label>标签（逗号隔开）</label><input type="text" data-bind="tags" value="' + esc((la.tags || []).join("，")) + '" placeholder="比如：AI绘画，长文" /></div>' +
             '<div class="field"><label>摘要（显示在长文列表里）</label><textarea rows="2" data-bind="excerpt">' + esc(la.excerpt || "") + "</textarea></div>" +
+            styleRowHTML(la, "excerptStyle") +
             '<div class="or-line">封面图：粘贴链接，或选本地文件</div>' +
             '<div class="work-flex">' +
               '<div class="work-thumb"><img alt="封面预览" /><div class="thumb-cap">封面预览</div></div>' +
@@ -1316,6 +1471,7 @@
                 '<label class="file-btn">选择本地图片<input type="file" accept="image/*" hidden data-role="coverfile" /></label>' +
               "</div>" +
             "</div>" +
+            styleRowHTML(la, "bodyStyle", "正文样式（整篇共用）") +
             '<div class="or-line" style="margin-top:14px;">正文内容块（从上到下就是阅读顺序）</div>' +
             '<div class="blocks" data-role="blocks"></div>' +
             '<div class="block-btns">' +
@@ -1346,6 +1502,9 @@
         bindField(card, "longArticles", i, "minutes", { type: "number" });
         bindField(card, "longArticles", i, "tags", { type: "tags" });
         bindField(card, "longArticles", i, "excerpt");
+        bindStyleRow(card, function(){ return cfg().longArticles[i]; }, "titleStyle");
+        bindStyleRow(card, function(){ return cfg().longArticles[i]; }, "excerptStyle");
+        bindStyleRow(card, function(){ return cfg().longArticles[i]; }, "bodyStyle", function(){ syncPreview(); });
 
         /* 封面图 */
         var coverThumb = card.querySelector(".work-thumb img");
@@ -1387,13 +1546,14 @@
         var previewBox = card.querySelector('[data-role="longpreview"]');
         var previewBtn = card.querySelector('[data-role="previewBtn"]');
         function syncPreview(){
+          applyStyleEl(previewBox, longArticleAt(i).bodyStyle);
           if (previewBox.classList.contains("show")) previewBox.innerHTML = longPreviewHTML(longArticleAt(i));
         }
         previewBtn.addEventListener("click", function(){
           var show = !previewBox.classList.contains("show");
           previewBox.classList.toggle("show", show);
           previewBtn.textContent = show ? "收起预览" : "预览正文";
-          if (show) previewBox.innerHTML = longPreviewHTML(longArticleAt(i));
+          if (show){ previewBox.innerHTML = longPreviewHTML(longArticleAt(i)); applyStyleEl(previewBox, longArticleAt(i).bodyStyle); }
         });
 
         /* 内容块 */
@@ -1539,6 +1699,8 @@
     function renderAbout(){
       $("#aboutHeading").value = aboutCfg().heading || "";
       $("#aboutIntro").value = aboutCfg().intro || "";
+      mountStyleRow($("#aboutStyle-heading"), aboutCfg, "headingStyle");
+      mountStyleRow($("#aboutStyle-intro"), aboutCfg, "introStyle");
     }
 
     /* ================= 栏目标题编辑 ================= */
@@ -1560,8 +1722,8 @@
       } else {
         html = esc(title);
       }
-      var out = '<div class="sec-pv-title">' + html + "</div>";
-      if (hasSub) out += '<div class="sec-pv-sub">' + esc(s.sub || "") + "</div>";
+      var out = '<div class="sec-pv-title"' + styleAttr(s.titleStyle) + ">" + html + "</div>";
+      if (hasSub) out += '<div class="sec-pv-sub"' + styleAttr(s.subStyle) + ">" + esc(s.sub || "") + "</div>";
       return out;
     }
     function renderSections(){
@@ -1573,6 +1735,9 @@
         var subEl = $("#secSub-" + k);
         if (subEl) subEl.value = s.sub || "";
         $("#secPreview-" + k).innerHTML = sectionPreviewHTML(s, k !== "about");
+        var updPreview = function(){ $("#secPreview-" + k).innerHTML = sectionPreviewHTML(sectionsCfg()[k], k !== "about"); };
+        mountStyleRow($("#secStyle-" + k + "-title"), function(){ return sectionsCfg()[k]; }, "titleStyle", null, updPreview);
+        mountStyleRow($("#secStyle-" + k + "-sub"), function(){ return sectionsCfg()[k]; }, "subStyle", null, updPreview);
       });
     }
     function bindSectionField(k, field, inputId){
@@ -1600,7 +1765,9 @@
             '<div class="work-fields">' +
               '<div class="field"><label>图片链接</label><input type="text" data-bind="src" value="' + esc(h.src || "") + '" placeholder="粘贴图片链接" /></div>' +
               '<div class="field"><label>标题（叠在大图上显示）</label><input type="text" data-bind="title" value="' + esc(h.title || "") + '" /></div>' +
+              styleRowHTML(h, "titleStyle") +
               '<div class="field"><label>说明（标题下面那行小字）</label><input type="text" data-bind="desc" value="' + esc(h.desc || "") + '" /></div>' +
+              styleRowHTML(h, "descStyle") +
             "</div>" +
           "</div>";
         card.querySelector(".card-top").appendChild(deleteBtn("heroImages", i, renderHero));
@@ -1613,6 +1780,8 @@
           card.querySelector(".card-name").textContent = cfg().heroImages[i].title || "未命名";
         }});
         bindField(card, "heroImages", i, "desc");
+        bindStyleRow(card, function(){ return cfg().heroImages[i]; }, "titleStyle");
+        bindStyleRow(card, function(){ return cfg().heroImages[i]; }, "descStyle");
         syncThumb();
         box.appendChild(card);
       });
@@ -1636,16 +1805,19 @@
           '<div class="card-top"><span class="card-idx">' + (i + 1) + '</span>' +
           '<div class="grow"><div class="card-name">' + esc(l.name || "未命名") + '</div></div></div>' +
           '<div class="grid2">' +
-            '<div class="field"><label>名称</label><input type="text" data-bind="name" value="' + esc(l.name || "") + '" /></div>' +
+            '<div class="field"><label>名称</label><input type="text" data-bind="name" value="' + esc(l.name || "") + '" />' + styleRowHTML(l, "nameStyle") + "</div>" +
             '<div class="field"><label>卡片图标</label><select data-bind="icon">' + opts + "</select></div>" +
           "</div>" +
           '<div class="field"><label>一句话简介</label><input type="text" data-bind="desc" value="' + esc(l.desc || "") + '" /></div>' +
+          styleRowHTML(l, "descStyle") +
           '<div class="field"><label>网址</label><input type="url" data-bind="url" value="' + esc(l.url || "") + '" placeholder="https://…" /></div>';
         card.querySelector(".card-top").appendChild(deleteBtn("friendLinks", i, renderLinks));
         bindField(card, "friendLinks", i, "name", { after: function(){
           card.querySelector(".card-name").textContent = cfg().friendLinks[i].name || "未命名";
         }});
         bindField(card, "friendLinks", i, "desc");
+        bindStyleRow(card, function(){ return cfg().friendLinks[i]; }, "nameStyle");
+        bindStyleRow(card, function(){ return cfg().friendLinks[i]; }, "descStyle");
         bindField(card, "friendLinks", i, "url");
         bindField(card, "friendLinks", i, "icon", { event: "change" });
         box.appendChild(card);
@@ -1733,6 +1905,7 @@
     function renderMusic(){
       $("#albumId").value = (cfg().music && cfg().music.id) || "";
       $("#siteName").value = cfg().siteName || "";
+      mountStyleRow($("#siteNameStyleSlot"), function(){ return cfg(); }, "siteNameStyle");
     }
 
     /* ================= 背景设置 ================= */
