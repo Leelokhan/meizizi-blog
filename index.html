@@ -237,6 +237,37 @@
       .post.from, .friend.from{ transform:translate(var(--fx,0), var(--fy,60px)) rotate(var(--fr,8deg)) scale(.8); transition:none; }
       .post.fly, .friend.fly{ transition:transform .85s cubic-bezier(.18,1.45,.32,1), opacity .55s ease, box-shadow .5s ease, border-color .5s ease; }
 
+      /* ---------- 长文 ---------- */
+      .long-posts{ display:grid; grid-template-columns:repeat(2,1fr); gap:22px; padding-bottom:16px; }
+      .long-post{
+        background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+        overflow:hidden; cursor:pointer; display:flex;
+        backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+        transform:translate(var(--dx,0px), var(--dy,0px)) rotate(var(--rot,0deg));
+        will-change:transform,opacity;
+        transition:transform .45s cubic-bezier(.2,1.1,.3,1), box-shadow .45s ease, border-color .45s ease;
+      }
+      .long-post:hover, .long-post:focus-visible{
+        transform:translate(var(--dx,0px), calc(var(--dy,0px) - 8px)) rotate(0deg); outline:none;
+        border-color:rgba(240,189,118,.55);
+        box-shadow:0 22px 44px rgba(0,0,0,.55), 0 0 26px rgba(240,189,118,.16);
+      }
+      .long-cover{ width:200px; flex:none; overflow:hidden; position:relative; }
+      .long-cover img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .7s ease; }
+      .long-post:hover .long-cover img{ transform:scale(1.08); }
+      .long-body{ padding:20px 20px 18px; display:flex; flex-direction:column; gap:9px; flex:1; min-width:0; }
+      .long-body h3{ font-family:var(--serif); font-size:20px; line-height:1.45; margin:0; transition:color .3s; }
+      .long-post:hover .long-body h3{ color:var(--gold); }
+      .long-body p{ margin:0; color:var(--muted); font-size:14px; line-height:1.7; flex:1; }
+      .long-post.pre{ opacity:0; transition:none; }
+      .long-post.from{ transform:translate(var(--fx,0), var(--fy,60px)) rotate(var(--fr,8deg)) scale(.8); transition:none; }
+      .long-post.fly{ transition:transform .85s cubic-bezier(.18,1.45,.32,1), opacity .55s ease, box-shadow .5s ease, border-color .5s ease; }
+      /* 阅读弹窗里的长文正文：小标题和配图 */
+      .reader-panel .content h3{ font-family:var(--serif); font-size:20px; line-height:1.5; margin:1.3em 0 .6em; color:var(--gold); }
+      .reader-panel .content figure{ margin:0 0 1.2em; }
+      .reader-panel .content figure img{ width:100%; border-radius:12px; display:block; }
+      .reader-panel .content figcaption{ color:var(--faint); font-size:13px; text-align:center; margin-top:8px; line-height:1.6; }
+
       /* ---------- 关于 ---------- */
       .about-card{
         background:var(--panel); border:1px solid var(--line); border-radius:18px;
@@ -412,9 +443,11 @@
       }
       .toast.show{ opacity:1; transform:translateX(-50%); }
 
-      @media (max-width:900px){ .posts{ grid-template-columns:repeat(2,1fr); } }
+      @media (max-width:900px){ .posts{ grid-template-columns:repeat(2,1fr); } .long-posts{ grid-template-columns:1fr; } }
       @media (max-width:620px){
         .posts{ grid-template-columns:1fr; }
+        .long-post{ flex-direction:column; }
+        .long-cover{ width:100%; height:170px; }
         .nav{ gap:12px; } .brand{ font-size:18px; }
         .nav-links a{ padding:8px 9px; font-size:14px; }
         .hero-arrow{ display:none; }
@@ -446,6 +479,7 @@
       <nav class="nav-links">
         <a href="#gallery">开始浏览</a>
         <a href="#articles">专题</a>
+        <a href="#longArticles">长文</a>
         <a href="#about">关于</a>
       </nav>
     </header>
@@ -494,6 +528,18 @@
         </div>
       </section>
 
+      <!-- 长文 -->
+      <section id="longArticles">
+        <div class="wrap">
+          <div class="sec-head">
+            <h2>长<span class="accent">文</span> · 慢慢读</h2>
+            <div class="sec-rule"></div>
+            <p>写得长一点的，带图，慢慢看</p>
+          </div>
+          <div class="long-posts" id="longGrid"></div>
+        </div>
+      </section>
+
       <!-- 关于 -->
       <section id="about">
         <div class="wrap">
@@ -504,11 +550,11 @@
           <div class="about-card">
             <img class="about-avatar" id="aboutAvatar" alt="博主头像" />
             <div style="flex:1; min-width:min(420px,100%);">
-              <h3>你好，我是美滋滋</h3>
-              <p>白天和 AI 打交道，晚上提笔（和数位板）画画。这个小站放我的绘画作品和 AI 使用手记：提示词、工具、踩过的坑，还有一些不成熟的小感想。内容会慢慢更新，欢迎常来坐坐，听首歌再走。</p>
+              <h3 id="aboutHeading">你好，我是美滋滋</h3>
+              <p id="aboutIntro">白天和 AI 打交道，晚上提笔（和数位板）画画。这个小站放我的绘画作品和 AI 使用手记：提示词、工具、踩过的坑，还有一些不成熟的小感想。内容会慢慢更新，欢迎常来坐坐，听首歌再走。</p>
               <div class="about-stats">
-                <div><b>10</b><span>绘画作品</span></div>
-                <div><b>6</b><span>AI 专题文章</span></div>
+                <div><b id="statWorks">10</b><span>绘画作品</span></div>
+                <div><b id="statArticles">6</b><span>AI 专题文章</span></div>
                 <div><b>1</b><span>位看板娘陪你逛</span></div>
               </div>
             </div>
@@ -597,7 +643,7 @@
     <script>
     /* ================================================================
        ★ CONFIG 数据块 —— 后期替换这里即可 ★
-       作品、文章、顶部大图、友情链接、音乐、看板娘都在这里改，
+       作品、文章、长文、顶部大图、友情链接、音乐、看板娘、关于都在这里改，
        下面的渲染代码不用动。换图就改图片地址，增删条目就增删一行。
        ================================================================ */
     var CONFIG = {
@@ -606,6 +652,10 @@
     "video": "bg.mp4",
     "fallback": "https://mm.py.kg/vd/Hatsune%20Miku.mp4",
     "overlay": 0.55
+  },
+  "about": {
+    "heading": "你好，我是美滋滋",
+    "intro": "白天和 AI 打交道，晚上提笔（和数位板）画画。这个小站放我的绘画作品和 AI 使用手记：提示词、工具、踩过的坑，还有一些不成熟的小感想。内容会慢慢更新，欢迎常来坐坐，听首歌再走。"
   },
   "heroImages": [
     {
@@ -767,6 +817,63 @@
       "minutes": 3,
       "excerpt": "AI 一秒出图之后，手绘还有意义吗？画了几个月之后，我的答案慢慢清楚了起来。",
       "content": "自从 AI 绘画能一秒出图，总有人问我：还手动画什么呢？老实说，我也迷茫过一阵。论速度、论完成度，业余的我都比不过模型。但继续画了几个月后，答案慢慢清楚了：AI 解决的是「像不像」，而我想画的，是「为什么是这一笔」。\n一张亲手画的图里，藏着只有我知道的东西：这个配色是因为那天晚霞特别红，这个构图改了七遍是因为想留住某个瞬间。这些选择的过程，本身就是作品的一部分，是生成按钮给不了的。现在我反而把 AI 当成助手：它出草稿和配色方案，我来做取舍和落笔。工具越强，「人的那部分」就越显眼——审美、故事，和不肯将就的心气。画画的人还在画的，大概就是这些。"
+    }
+  ],
+  "longArticles":   [
+    {
+      "title": "我用 AI 画画的这一年：从抽卡到成图",
+      "date": "2026-11-21",
+      "tags": [
+        "AI绘画",
+        "长文"
+      ],
+      "minutes": 8,
+      "excerpt": "从第一句提示词开始，到攒出一本能拿得出手的画集，这一年我把 AI 从玩具用成了工具。这篇把踩过的坑、留下的习惯都写下来了。",
+      "cover": "images/00003-730824268.png",
+      "content": [
+        {
+          "t": "p",
+          "x": "去年这个时候，我第一次让 AI 帮我画画。输入一句「一个女孩」，等了十秒，出来一张糊脸——当时觉得这东西不过如此。一年过去，我的作品区里已经有十张能拿得出手的图，其中几张还是 AI 出草稿、我再落笔改出来的。这篇就写写这一年里，哪些事真的有用。"
+        },
+        {
+          "t": "p",
+          "x": "先说结论：AI 最大的用处不是替你画，而是替你试错。配色、构图、氛围，一天能试几十种方向，成本几乎为零。真正决定一张图好不好看的，仍然是最后那个「留哪张、改哪里」的决定——这个决定，机器替不了你。"
+        },
+        {
+          "t": "h",
+          "x": "提示词：从「一个女孩」到能用的句子"
+        },
+        {
+          "t": "p",
+          "x": "早期我的提示词只有一句话，出图全靠运气。后来我固定了一个结构：主体、风格、光线、镜头，四件事说清楚。比如「樱花和服、粉色发带、水彩质感、黄昏逆光、半身构图」，写成这样，出图质量立刻稳定下来。同一句提示词一次抽四张，挑最顺眼的留下来，再对着它反推哪些词起了作用，记到小本本上。"
+        },
+        {
+          "t": "img",
+          "src": "https://images7.alphacoders.com/919/thumb-1920-919555.png",
+          "cap": "《樱花和服》——第一次觉得“这张能留下来”的图"
+        },
+        {
+          "t": "p",
+          "x": "抽卡一百次之后，你会慢慢有「词感」：看到一张好图，能反推出它大概用了哪些词；看到自己的图差口气，也知道该往提示词里补什么。负面提示词同样重要，多指、变形、模糊这些毛病提前排除，能省下大量返工时间。"
+        },
+        {
+          "t": "h",
+          "x": "抽卡一百次之后，留下的习惯"
+        },
+        {
+          "t": "p",
+          "x": "现在我的流程固定下来了：AI 出草稿和配色方案，我来做取舍和落笔。草稿阶段不纠结细节，只看大感觉；定下来之后再慢慢修。工具越强，「人的那部分」就越显眼——审美、故事，和不肯将就的心气。"
+        },
+        {
+          "t": "img",
+          "src": "https://images4.alphacoders.com/118/1184450.png",
+          "cap": "《星空之下》——配色方案是 AI 给的，落笔是我"
+        },
+        {
+          "t": "p",
+          "x": "如果你也刚开始，不用急着追最新的模型。先把一句提示词写明白，先攒下十张自己喜欢的图，习惯自然就长出来了。画画这件事，AI 只是换了支笔，握笔的人还是你。"
+        }
+      ]
     }
   ],
   "friendLinks": [
@@ -1225,6 +1332,29 @@
       chainImg($("#aboutAvatar"), allImgs.slice(5).concat(allImgs.slice(0, 5)), 0);
     })();
 
+    /* 长文 / 短文共用的正文渲染：字符串按换行分段；数组按内容块渲染。
+       块格式：{"t":"p","x":"段落"} / {"t":"h","x":"小标题"} / {"t":"img","src":"地址","cap":"图说"} */
+    function renderArticleContent(box, content) {
+      box.innerHTML = "";
+      if (Array.isArray(content)) {
+        content.forEach(function (b) {
+          if (!b) return;
+          if (b.t === "h") { var h = document.createElement("h3"); h.textContent = b.x || ""; box.appendChild(h); }
+          else if (b.t === "img") {
+            var f = document.createElement("figure");
+            var im = document.createElement("img"); im.src = b.src || ""; im.alt = b.cap || ""; im.loading = "lazy";
+            f.appendChild(im);
+            if (b.cap) { var c = document.createElement("figcaption"); c.textContent = b.cap; f.appendChild(c); }
+            box.appendChild(f);
+          } else { var p = document.createElement("p"); p.textContent = b.x || ""; box.appendChild(p); }
+        });
+      } else {
+        (content || "").split("\n").forEach(function (para) {
+          var p = document.createElement("p"); p.textContent = para; box.appendChild(p);
+        });
+      }
+    }
+
     /* ---------- 文章卡片 + 阅读弹窗 ---------- */
     (function () {
       var grid = $("#postGrid");
@@ -1264,10 +1394,8 @@
         $("#readerTitle").textContent = a.title;
         $("#readerMeta").innerHTML = "<span>" + a.date + "</span><span>约 " + a.minutes + " 分钟读完</span>" +
           a.tags.map(function (t) { return '<span class="tag">' + t + "</span>"; }).join("");
-        var box = $("#readerContent"); box.innerHTML = "";
-        a.content.split("\n").forEach(function (para) {
-          var p = document.createElement("p"); p.textContent = para; box.appendChild(p);
-        });
+        var box = $("#readerContent");
+        renderArticleContent(box, a.content);
         reader.classList.add("open");
         document.body.style.overflow = "hidden";
         $(".reader-panel", reader).scrollTop = 0;
@@ -1276,6 +1404,63 @@
       $("#readerClose").addEventListener("click", closeReader);
       reader.addEventListener("click", function (e) { if (e.target === reader) closeReader(); });
       document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeReader(); });
+    })();
+
+    /* ---------- 长文卡片 + 关于区（内容来自 CONFIG） ---------- */
+    (function () {
+      /* 关于：标题、介绍从 CONFIG.about 来，编辑器里可改；统计数字自动算 */
+      var ab = CONFIG.about || {};
+      if (ab.heading) { var ah = $("#aboutHeading"); if (ah) ah.textContent = ab.heading; }
+      if (ab.intro) { var ai = $("#aboutIntro"); if (ai) ai.textContent = ab.intro; }
+      var sw = $("#statWorks"); if (sw) sw.textContent = (CONFIG.works || []).length;
+      var sa = $("#statArticles"); if (sa) sa.textContent = (CONFIG.articles || []).length + ((CONFIG.longArticles || []).length);
+
+      /* 长文卡片 */
+      var grid = $("#longGrid");
+      if (!grid) return;
+      var list = CONFIG.longArticles || [];
+      if (!list.length) { var sec = $("#longArticles"); if (sec) sec.style.display = "none"; return; }
+      var cards = [];
+      var rnd = function (a, b) { return a + Math.random() * (b - a); };
+      list.forEach(function (a, i) {
+        var card = document.createElement("article");
+        card.className = "long-post"; card.tabIndex = 0;
+        card.setAttribute("role", "button");
+        card.setAttribute("aria-label", "阅读长文：" + a.title);
+        var tags = (a.tags || []).map(function (t) { return '<span class="tag">' + t + "</span>"; }).join("");
+        card.innerHTML =
+          '<div class="long-cover"><img alt=""></div>' +
+          '<div class="long-body"><h3></h3><p></p>' +
+          '<div class="post-meta"><span>' + a.date + "</span><span>约 " + a.minutes + " 分钟</span>" + tags + "</div>" +
+          '<span class="post-more">慢慢读</span></div>';
+        card.querySelector("h3").textContent = a.title;
+        card.querySelector("p").textContent = a.excerpt || "";
+        var img = card.querySelector("img");
+        img.alt = "长文《" + a.title + "》封面";
+        img.loading = "lazy";
+        if (a.cover) { img.src = a.cover; img.onerror = function () { img.style.display = "none"; }; }
+        function open() { openLongReader(a); }
+        card.addEventListener("click", open);
+        card.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
+        card.style.setProperty("--rot", rnd(-1.6, 1.6).toFixed(2) + "deg");
+        card.style.setProperty("--dx", rnd(-6, 6).toFixed(1) + "px");
+        card.style.setProperty("--dy", rnd(0, 14).toFixed(1) + "px");
+        cards.push(card);
+        grid.appendChild(card);
+      });
+      setupFlyIn(cards);
+      function openLongReader(a) {
+        /* 复用短文的阅读弹窗 */
+        var reader = $("#reader");
+        $("#readerTitle").textContent = a.title;
+        $("#readerMeta").innerHTML = "<span>" + a.date + "</span><span>约 " + a.minutes + " 分钟读完</span>" +
+          (a.tags || []).map(function (t) { return '<span class="tag">' + t + "</span>"; }).join("");
+        var box = $("#readerContent");
+        renderArticleContent(box, a.content);
+        reader.classList.add("open");
+        document.body.style.overflow = "hidden";
+        var panel = reader.querySelector(".reader-panel"); if (panel) panel.scrollTop = 0;
+      }
     })();
 
     /* ---------- 友情链接 / 我的站点（页面底部，新窗口打开） ---------- */
